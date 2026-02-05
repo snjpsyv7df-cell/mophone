@@ -162,16 +162,16 @@
         </div>
 
         <div class="widget-item">
-            <div class="editable" contenteditable="true" style="font-size: 9px;">352GB/511GB</div>
+            <div id="widget-storage" class="editable" contenteditable="true" style="font-size: 9px;">352GB/511GB</div>
         </div>
 
         <div class="widget-item" style="grid-column: span 2;">
-            <div class="editable" contenteditable="true">iPhone 16 Pro</div>
-            <div class="editable" contenteditable="true" style="font-weight:bold; font-size: 10px;"> A18 Pro</div>
+            <div id="widget-model" class="editable" contenteditable="true">iPhone 16 Pro</div>
+            <div id="widget-chip" class="editable" contenteditable="true" style="font-weight:bold; font-size: 10px;"> A18 Pro</div>
         </div>
 
         <div class="widget-item">
-            <div class="editable" contenteditable="true" style="font-size: 9px;">iOS 26.2.1</div>
+            <div id="widget-version" class="editable" contenteditable="true" style="font-size: 9px;">iOS 26.2.1</div>
         </div>
     </div>
 
@@ -348,8 +348,14 @@ document.getElementById('hidden-picker').onchange = function(e) {
     if (file) {
         const reader = new FileReader();
         reader.onload = (ev) => {
-            document.getElementById(activeTarget).src = ev.target.result;
-            if(activeTarget === 'me-avatar-img') currentUserAvatar = ev.target.result;
+            const result = ev.target.result;
+            document.getElementById(activeTarget).src = result;
+            if(activeTarget === 'me-avatar-img') {
+                currentUserAvatar = result;
+                localStorage.setItem('me_avatar', result);
+            }
+            if(activeTarget === 'img-left') localStorage.setItem('img_left', result);
+            if(activeTarget === 'img-right') localStorage.setItem('img_right', result);
         }
         reader.readAsDataURL(file);
     }
@@ -365,9 +371,9 @@ let currentMyBio = "你是一个普通用户。";
 
 let friends = {}; 
 let chatHistory = {};
-let currentChatFriend = "";
+let myBios = []; // 存储所有自己的人设
 let apiSettings = { url: '', key: '', model: '', memory: 25 };
-let isAiThinking = false; // AI正在回复状态锁
+let isAiThinking = false; 
 
 function openWx() {
     openScreen('wechat-screen');
@@ -395,7 +401,6 @@ function saveMeSettings() {
     document.getElementById('me-id-display').innerText = currentMeId;
     document.getElementById('me-status-display').innerText = currentStatus;
     
-    // 保存到本地
     localStorage.setItem('me_name', currentUserName);
     localStorage.setItem('me_id', currentMeId);
     localStorage.setItem('me_status', currentStatus);
@@ -406,7 +411,10 @@ function saveMeSettings() {
 function showService() {
     if (userBalance === null) {
         let val = prompt("请输入初始余额：", "8888.00");
-        if (val !== null) userBalance = val;
+        if (val !== null) {
+            userBalance = val;
+            localStorage.setItem('me_balance', val);
+        }
     }
     alert("微信支付余额：¥" + (userBalance || "0.00"));
 }
@@ -433,24 +441,31 @@ function confirmAddAny() {
         if(modalMode === 'friend') {
             const displayName = mark || nick;
             friends[displayName] = { avatar, bio: bio || "普通好友" };
-            chatHistory[displayName] = [];
+            chatHistory[displayName] = chatHistory[displayName] || [];
+            saveWxData();
             renderFriendList();
         } else {
-            const div = document.createElement('div');
-            div.className = 'contact-item';
-            div.onclick = () => { 
-                currentMyBio = bio; 
-                alert("已切换为你的人设：" + nick); 
-                closeScreen('my-bios-screen');
-            };
-            div.innerHTML = `<img src="${avatar}" class="contact-avatar"><span>${nick}</span>`;
-            document.getElementById('bios-list').appendChild(div);
+            const newBio = { nick, avatar, bio };
+            myBios.push(newBio);
+            saveWxData();
+            renderBioList();
         }
         document.getElementById('add-modal').style.display = 'none';
+        // 清空输入
+        document.getElementById('add-nick').value = '';
+        document.getElementById('add-mark').value = '';
+        document.getElementById('add-bio').value = '';
+        document.getElementById('add-head').value = '';
     };
 
     if(headFile) reader.readAsDataURL(headFile);
     else reader.onload({target:{result:'https://via.placeholder.com/45'}});
+}
+
+function saveWxData() {
+    localStorage.setItem('wx_friends', JSON.stringify(friends));
+    localStorage.setItem('wx_chat_history', JSON.stringify(chatHistory));
+    localStorage.setItem('wx_my_bios', JSON.stringify(myBios));
 }
 
 function renderFriendList() {
@@ -465,11 +480,28 @@ function renderFriendList() {
     }
 }
 
+function renderBioList() {
+    const list = document.getElementById('bios-list');
+    list.innerHTML = "";
+    myBios.forEach((item) => {
+        const div = document.createElement('div');
+        div.className = 'contact-item';
+        div.onclick = () => { 
+            currentMyBio = item.bio; 
+            alert("已切换为你的人设：" + item.nick); 
+            localStorage.setItem('current_my_bio', item.bio);
+            closeScreen('my-bios-screen');
+        };
+        div.innerHTML = `<img src="${item.avatar}" class="contact-avatar"><span>${item.nick}</span>`;
+        list.appendChild(div);
+    });
+}
+
 function openChat(name) {
     currentChatFriend = name;
     document.getElementById('chat-title').innerText = name;
     document.getElementById('chat-content').innerHTML = "";
-    chatHistory[name].forEach(m => renderMessage(m.text, m.type));
+    (chatHistory[name] || []).forEach(m => renderMessage(m.text, m.type));
     openScreen('chat-screen');
 }
 
@@ -494,7 +526,9 @@ async function sendMessage() {
     const content = input.value.trim();
     if(!content) return;
     renderMessage(content, 'self');
+    if(!chatHistory[currentChatFriend]) chatHistory[currentChatFriend] = [];
     chatHistory[currentChatFriend].push({text: content, type: 'self'});
+    saveWxData();
     input.value = "";
     document.getElementById('msg-send-btn').style.display = 'none';
 }
@@ -509,7 +543,6 @@ async function triggerAiReply() {
     titleDom.innerText = "正在输入中...";
 
     const friendInfo = friends[currentChatFriend];
-    // 强制AI多说话，以便拆分
     const systemPrompt = `你现在模拟微信聊天。你的名字/人设是：${friendInfo.bio}。对方名字：${currentUserName}，人设：${currentMyBio}。规则：1.仅对话，严禁动作描述和旁白。2.请尽量多说几句话（3-5句），每句话之间用换行符分隔，增加聊天的真实感。`;
 
     try {
@@ -529,19 +562,16 @@ async function triggerAiReply() {
 
         const data = await response.json();
         const fullText = data.choices[0].message.content;
-        
-        // 拆分逻辑：根据换行符或中文标点拆分多条回复
         const messages = fullText.split(/[\n]+/).filter(s => s.trim().length > 0);
         
-        // 逐条发送
         for(let i=0; i < messages.length; i++) {
             const msg = messages[i].trim();
-            // 模拟打字延迟：每条消息根据长度延迟 1-2.5秒
             const delay = Math.min(Math.max(msg.length * 100, 1000), 2500);
             await new Promise(res => setTimeout(res, delay));
             
             renderMessage(msg, 'friend');
             chatHistory[currentChatFriend].push({text: msg, type: 'friend'});
+            saveWxData();
         }
 
     } catch (e) { 
@@ -576,18 +606,22 @@ function saveApiSettings() {
     apiSettings.url = document.getElementById('api-url').value;
     apiSettings.key = document.getElementById('api-key').value;
     apiSettings.memory = parseInt(document.getElementById('api-memory').value) || 25;
-    // 保存到本地
     localStorage.setItem('my_api_url', apiSettings.url);
     localStorage.setItem('my_api_key', apiSettings.key);
     localStorage.setItem('my_api_model', apiSettings.model);
+    localStorage.setItem('my_api_memory', apiSettings.memory);
     alert("已保存"); closeScreen('api-screen');
 }
 
 function applyFontSettings() {
     const size = document.getElementById('font-resizer').value + "px";
     const color = document.getElementById('font-color').value;
+    const url = document.getElementById('font-url').value;
     document.documentElement.style.setProperty('--main-font-size', size);
     document.documentElement.style.setProperty('--main-font-color', color);
+    localStorage.setItem('font_size', size);
+    localStorage.setItem('font_color', color);
+    localStorage.setItem('font_url', url);
     closeScreen('font-screen');
 }
 
@@ -604,22 +638,61 @@ document.getElementById('wall-file').onchange = function(e) {
 
 function saveWallpaper() { closeScreen('wallpaper-screen'); }
 
+// 监听可编辑小组件内容的保存
+document.querySelectorAll('.editable').forEach(el => {
+    el.addEventListener('blur', () => {
+        localStorage.setItem('widget_' + el.id, el.innerText);
+    });
+});
+
 // 页面加载自动读取缓存
 window.onload = function() {
     const s_url = localStorage.getItem('my_api_url');
     const s_key = localStorage.getItem('my_api_key');
     const s_model = localStorage.getItem('my_api_model');
+    const s_memory = localStorage.getItem('my_api_memory');
     const s_wall = localStorage.getItem('my_wallpaper');
     const s_name = localStorage.getItem('me_name');
-    
+    const s_id = localStorage.getItem('me_id');
+    const s_status = localStorage.getItem('me_status');
+    const s_avatar = localStorage.getItem('me_avatar');
+    const s_balance = localStorage.getItem('me_balance');
+    const s_f = localStorage.getItem('wx_friends');
+    const s_ch = localStorage.getItem('wx_chat_history');
+    const s_bios = localStorage.getItem('wx_my_bios');
+    const s_cur_bio = localStorage.getItem('current_my_bio');
+    const s_fs = localStorage.getItem('font_size');
+    const s_fc = localStorage.getItem('font_color');
+    const s_imgl = localStorage.getItem('img_left');
+    const s_imgr = localStorage.getItem('img_right');
+
     if(s_url) { apiSettings.url = s_url; document.getElementById('api-url').value = s_url; }
     if(s_key) { apiSettings.key = s_key; document.getElementById('api-key').value = s_key; }
     if(s_model) { apiSettings.model = s_model; document.getElementById('model-name-display').innerText="模型："+s_model; }
+    if(s_memory) { apiSettings.memory = parseInt(s_memory); document.getElementById('api-memory').value = s_memory; }
     if(s_wall) document.documentElement.style.setProperty('--bg-url', `url(${s_wall})`);
-    if(s_name) {
-        currentUserName = s_name;
-        document.getElementById('me-nick-display').innerText = s_name;
-    }
+    if(s_name) { currentUserName = s_name; document.getElementById('me-nick-display').innerText = s_name; }
+    if(s_id) { currentMeId = s_id; document.getElementById('me-id-display').innerText = s_id; }
+    if(s_status) { currentStatus = s_status; document.getElementById('me-status-display').innerText = s_status; }
+    if(s_avatar) { currentUserAvatar = s_avatar; document.getElementById('me-avatar-img').src = s_avatar; }
+    if(s_balance) userBalance = s_balance;
+    if(s_f) friends = JSON.parse(s_f);
+    if(s_ch) chatHistory = JSON.parse(s_ch);
+    if(s_bios) myBios = JSON.parse(s_bios);
+    if(s_cur_bio) currentMyBio = s_cur_bio;
+    if(s_fs) document.documentElement.style.setProperty('--main-font-size', s_fs);
+    if(s_fc) document.documentElement.style.setProperty('--main-font-color', s_fc);
+    if(s_imgl) document.getElementById('img-left').src = s_imgl;
+    if(s_imgr) document.getElementById('img-right').src = s_imgr;
+
+    // 加载小组件内容
+    document.querySelectorAll('.editable').forEach(el => {
+        const saved = localStorage.getItem('widget_' + el.id);
+        if(saved) el.innerText = saved;
+    });
+
+    renderFriendList();
+    renderBioList();
 };
 </script>
 </body>
