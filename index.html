@@ -37,19 +37,18 @@
             color: var(--main-font-color);
         }
 
-        /* 仅针对此部分进行了长度拉长调整 */
         .widget-container {
             width: 92%; 
-            height: 160px; /* 从 110px 拉长到 160px */
-            margin-top: calc(12% + env(safe-area-inset-top)); /* 稍微向上调了一点点，让布局更协调 */
+            height: 160px;
+            margin-top: calc(12% + env(safe-area-inset-top));
             background: rgba(255, 255, 255, 0.4); 
             backdrop-filter: blur(15px);
-            border-radius: 28px; /* 稍微增加圆角以匹配长度 */
-            padding: 12px; /* 增加内边距 */
+            border-radius: 28px;
+            padding: 12px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 10px; /* 稍微增加间隙 */
+            gap: 10px;
             box-sizing: border-box;
         }
 
@@ -146,30 +145,24 @@
             <div id="widget-date" class="editable" contenteditable="true">--</div>
             <div id="widget-day" class="editable" contenteditable="true">--</div>
         </div>
-        
         <div class="widget-item">
             <div style="font-size: 10px;">📶 WiFi</div>
             <div style="color:#007aff; font-weight: bold;">On</div>
         </div>
-
         <div class="widget-item">
             <div id="widget-time" class="editable" contenteditable="true">--:--</div>
         </div>
-
         <div class="widget-item">
             <div style="font-size: 14px;">🔋</div>
             <div id="bat-val">--%</div>
         </div>
-
         <div class="widget-item">
             <div id="widget-storage" class="editable" contenteditable="true" style="font-size: 9px;">352GB/511GB</div>
         </div>
-
         <div class="widget-item" style="grid-column: span 2;">
             <div id="widget-model" class="editable" contenteditable="true">iPhone 16 Pro</div>
             <div id="widget-chip" class="editable" contenteditable="true" style="font-weight:bold; font-size: 10px;"> A18 Pro</div>
         </div>
-
         <div class="widget-item">
             <div id="widget-version" class="editable" contenteditable="true" style="font-size: 9px;">iOS 26.2.1</div>
         </div>
@@ -177,20 +170,25 @@
 
     <div class="app-grid">
         <div class="iscreen-img-box" onclick="pickImg('img-left')"><img id="img-left" src="https://via.placeholder.com/300?text=Pic+1"></div>
-        <div class="app-item" onclick="openScreen('theme-screen')"><div class="app-icon" style="background:#fff6f9;">🎨</div><div style="font-size:12px; color:#fff">主题</div></div>
-        <div class="app-item" onclick="openWx()"><div class="app-icon" style="background:#07c160; color:#fff; font-size:16px;">微信</div><div style="font-size:12px; color:#fff">微信</div></div>
-        <div class="app-item"><div class="app-icon" style="background:#1c99ff; color:#fff;">📖</div><div style="font-size:12px; color:#fff">世界书</div></div>
-        <div class="app-item" onclick="openScreen('settings-screen')"><div class="app-icon" style="background:#000; color:#fff;">⚙️</div><div style="font-size:12px; color:#fff">设置</div></div>
-        <div class="app-item"><div class="app-icon" style="background:#fff;">🛒</div><div style="font-size:12px; color:#fff">商店</div></div>
+        <div class="app-item" onclick="openScreen('theme-screen')"><div class="app-icon" style="background:#fff6f9;"><img src="https://files.catbox.moe/acicvj.png" style="width:100%; height:100%; border-radius:16px; object-fit:cover;"></div><div style="font-size:12px; color:#fff">主题</div></div>
+        <div class="app-item" onclick="openWx()">
+            <div class="app-icon" style="background:#fff; overflow:hidden;">
+                <img src="https://files.catbox.moe/p41qzk.png" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="font-size:12px; color:#fff">微信</div>
+        </div>
+        <div class="app-item"><div class="app-icon" style="background:#fff; overflow:hidden;"><img src="https://files.catbox.moe/odkva0.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">世界书</div></div>
+        <div class="app-item" onclick="openScreen('settings-screen')"><div class="app-icon" style="background:#fff; overflow:hidden;"><img src="https://files.catbox.moe/87gxcf.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">设置</div></div>
+        <div class="app-item"><div class="app-icon" style="background:#fff;overflow:hidden;"><img src="https://files.catbox.moe/jj9fxf.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">商店</div></div>
         <div class="app-item"><div class="app-icon" style="background:#000; color:#fff;">𝕏</div><div style="font-size:12px; color:#fff">X</div></div>
         <div class="iscreen-img-box" onclick="pickImg('img-right')"><img id="img-right" src="https://via.placeholder.com/300?text=Pic+2"></div>
     </div>
 
     <div class="dock">
-        <div class="app-icon" style="background:#4cd964;">📞</div>
-        <div class="app-icon" style="background:#fff;">🧭</div>
-        <div class="app-icon" style="background: linear-gradient(180deg, #5AC8FA 0%, #007AFF 100%); color:#fff;">☀️</div>
-        <div class="app-icon" style="background:#000;">📷</div>
+        <div class="app-icon" style="background:#fff; display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/b6qyki.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
+        <div class="app-icon" style="background:#fff ;display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/e1eq3w.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
+        <div class="app-icon" style="background:#fff ;display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/azg53f.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
+        <div class="app-icon" style="background:#fff; display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/2pt67i.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
     </div>
 
     <div id="wechat-screen" class="screen-full">
@@ -200,11 +198,8 @@
                 <span style="flex:1">微信</span>
                 <span style="font-size:24px; cursor:pointer;" onclick="showAddModal('friend')">+</span>
             </div>
-            <div id="chat-list" style="flex:1; background:#fff; overflow-y:auto;">
-                <div class="contact-item"><div class="contact-avatar" style="background:#eee;"></div><span>微信团队</span></div>
-            </div>
+            <div id="chat-list" style="flex:1; background:#fff; overflow-y:auto;"></div>
         </div>
-
         <div id="wx-page-me" style="display:none; flex-direction:column; height:100%; background:#ededed;">
             <div class="sub-header" style="background:#fff; padding-bottom:30px;">
                 <img id="me-avatar-img" src="https://via.placeholder.com/60" style="width:60px; height:60px; border-radius:8px; margin-right:15px;" onclick="pickImg('me-avatar-img')">
@@ -218,7 +213,6 @@
             <div class="menu-item arrow-r" onclick="openMyBios()">我的人设</div>
             <div class="menu-item arrow-r" onclick="openMeSettings()">个人信息设置</div>
         </div>
-
         <div class="wx-navbar">
             <div class="nav-item" onclick="switchWxTab('msg')"><div class="nav-icon">💬</div>消息</div>
             <div class="nav-item"><div class="nav-icon">🧭</div>发现</div>
@@ -311,8 +305,20 @@
         <div class="setting-box">
             <div class="menu-item arrow-r" onclick="document.getElementById('wall-file').click()">选取相册图片</div>
             <input type="file" id="wall-file" hidden accept="image/*">
-            <div id="wall-preview" style="height:200px; background:#ccc; border-radius:15px; background-size:cover;"></div>
-            <button onclick="saveWallpaper()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px; margin-top:20px;">保存</button>
+            
+            <div style="display: flex; justify-content: space-around; gap: 15px; margin: 20px 0;">
+                <div style="text-align: center;">
+                    <div id="preview-current" style="width: 100px; height: 180px; background: #ccc; border-radius: 12px; background-size: cover; background-position: center; border: 2px solid #333; overflow: hidden;"></div>
+                    <p style="font-size: 10px; color: #666; margin-top: 5px;">当前使用</p>
+                </div>
+                <div style="text-align: center;">
+                    <div id="preview-new" style="width: 100px; height: 180px; background: #eee; border-radius: 12px; background-size: cover; background-position: center; border: 2px dashed #999; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px;">
+                        未选择
+                    </div>
+                    <p style="font-size: 10px; color: #666; margin-top: 5px;">待替换预览</p>
+                </div>
+            </div>
+            <button onclick="saveWallpaper()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px;">保存并应用</button>
         </div>
     </div>
 
@@ -321,7 +327,7 @@
 <input type="file" id="hidden-picker" style="display:none;" accept="image/*">
 
 <script>
-// 基础系统逻辑
+// --- 系统基础逻辑 ---
 function syncTime() {
     const d = new Date();
     document.getElementById('widget-time').innerText = d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
@@ -361,7 +367,42 @@ document.getElementById('hidden-picker').onchange = function(e) {
     }
 }
 
-// 微信逻辑
+// --- 壁纸对比核心逻辑（只保留这一份） ---
+let tempWallpaperData = null;
+
+document.getElementById('wall-file').onchange = function(e) {
+    if (e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            tempWallpaperData = ev.target.result; 
+            const previewNew = document.getElementById('preview-new');
+            if (previewNew) {
+                previewNew.style.backgroundImage = `url(${tempWallpaperData})`;
+                previewNew.innerText = ""; 
+            }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    }
+};
+
+function saveWallpaper() { 
+    if (!tempWallpaperData) {
+        alert("请先选择一张新壁纸");
+        return;
+    }
+    document.documentElement.style.setProperty('--bg-url', `url(${tempWallpaperData})`);
+    localStorage.setItem('my_wallpaper', tempWallpaperData);
+    
+    const previewCurrent = document.getElementById('preview-current');
+    if (previewCurrent) {
+        previewCurrent.style.backgroundImage = `url(${tempWallpaperData})`;
+        previewCurrent.innerText = "";
+    }
+    alert("壁纸保存成功！");
+    closeScreen('wallpaper-screen'); 
+}
+
+// --- 微信及AI逻辑 ---
 let currentUserAvatar = 'https://via.placeholder.com/60';
 let currentUserName = "我";
 let currentMeId = "wxid_888";
@@ -371,15 +412,11 @@ let currentMyBio = "你是一个普通用户。";
 
 let friends = {}; 
 let chatHistory = {};
-let myBios = []; // 存储所有自己的人设
+let myBios = []; 
 let apiSettings = { url: '', key: '', model: '', memory: 25 };
 let isAiThinking = false; 
 
-function openWx() {
-    openScreen('wechat-screen');
-    switchWxTab('msg');
-}
-
+function openWx() { openScreen('wechat-screen'); switchWxTab('msg'); }
 function switchWxTab(tab) {
     document.getElementById('wx-page-msg').style.display = (tab === 'msg' ? 'flex' : 'none');
     document.getElementById('wx-page-me').style.display = (tab === 'me' ? 'flex' : 'none');
@@ -396,25 +433,19 @@ function saveMeSettings() {
     currentUserName = document.getElementById('set-me-nick').value;
     currentMeId = document.getElementById('set-me-id').value;
     currentStatus = document.getElementById('set-me-status').value;
-    
     document.getElementById('me-nick-display').innerText = currentUserName;
     document.getElementById('me-id-display').innerText = currentMeId;
     document.getElementById('me-status-display').innerText = currentStatus;
-    
     localStorage.setItem('me_name', currentUserName);
     localStorage.setItem('me_id', currentMeId);
     localStorage.setItem('me_status', currentStatus);
-    
     closeScreen('me-settings-screen');
 }
 
 function showService() {
     if (userBalance === null) {
         let val = prompt("请输入初始余额：", "8888.00");
-        if (val !== null) {
-            userBalance = val;
-            localStorage.setItem('me_balance', val);
-        }
+        if (val !== null) { userBalance = val; localStorage.setItem('me_balance', val); }
     }
     alert("微信支付余额：¥" + (userBalance || "0.00"));
 }
@@ -442,22 +473,14 @@ function confirmAddAny() {
             const displayName = mark || nick;
             friends[displayName] = { avatar, bio: bio || "普通好友" };
             chatHistory[displayName] = chatHistory[displayName] || [];
-            saveWxData();
-            renderFriendList();
+            saveWxData(); renderFriendList();
         } else {
             const newBio = { nick, avatar, bio };
             myBios.push(newBio);
-            saveWxData();
-            renderBioList();
+            saveWxData(); renderBioList();
         }
         document.getElementById('add-modal').style.display = 'none';
-        // 清空输入
-        document.getElementById('add-nick').value = '';
-        document.getElementById('add-mark').value = '';
-        document.getElementById('add-bio').value = '';
-        document.getElementById('add-head').value = '';
     };
-
     if(headFile) reader.readAsDataURL(headFile);
     else reader.onload({target:{result:'https://via.placeholder.com/45'}});
 }
@@ -497,6 +520,7 @@ function renderBioList() {
     });
 }
 
+let currentChatFriend = '';
 function openChat(name) {
     currentChatFriend = name;
     document.getElementById('chat-title').innerText = name;
@@ -536,50 +560,33 @@ async function sendMessage() {
 async function triggerAiReply() {
     if(!apiSettings.key) return alert("请先在设置中配置 API");
     if(isAiThinking) return alert("AI 正在回复中...");
-
     isAiThinking = true;
     const originalTitle = currentChatFriend;
     const titleDom = document.getElementById('chat-title');
     titleDom.innerText = "正在输入中...";
-
     const friendInfo = friends[currentChatFriend];
-    const systemPrompt = `你现在模拟微信聊天。你的名字/人设是：${friendInfo.bio}。对方名字：${currentUserName}，人设：${currentMyBio}。规则：1.仅对话，严禁动作描述和旁白。2.请尽量多说几句话（3-5句），每句话之间用换行符分隔，增加聊天的真实感。`;
-
+    const systemPrompt = `你现在模拟微信聊天。你的名字/人设是：${friendInfo.bio}。对方名字：${currentUserName}，人设：${currentMyBio}。规则：1.仅对话，严禁动作描述和旁白。2.请尽量多说几句话（3-5句），每句话之间用换行符分隔。`;
     try {
         const context = chatHistory[currentChatFriend].slice(-apiSettings.memory).map(m => ({
             role: m.type === 'self' ? 'user' : 'assistant',
             content: m.text
         }));
-
         const response = await fetch(`${apiSettings.url}/chat/completions`, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${apiSettings.key}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                model: apiSettings.model,
-                messages: [{role: "system", content: systemPrompt}, ...context]
-            })
+            body: JSON.stringify({ model: apiSettings.model, messages: [{role: "system", content: systemPrompt}, ...context] })
         });
-
         const data = await response.json();
         const fullText = data.choices[0].message.content;
         const messages = fullText.split(/[\n]+/).filter(s => s.trim().length > 0);
-        
         for(let i=0; i < messages.length; i++) {
             const msg = messages[i].trim();
-            const delay = Math.min(Math.max(msg.length * 100, 1000), 2500);
-            await new Promise(res => setTimeout(res, delay));
-            
+            await new Promise(res => setTimeout(res, Math.min(Math.max(msg.length * 100, 1000), 2500)));
             renderMessage(msg, 'friend');
             chatHistory[currentChatFriend].push({text: msg, type: 'friend'});
             saveWxData();
         }
-
-    } catch (e) { 
-        alert("AI 唤醒失败"); 
-    } finally {
-        isAiThinking = false;
-        titleDom.innerText = originalTitle;
-    }
+    } catch (e) { alert("AI 唤醒失败"); } finally { isAiThinking = false; titleDom.innerText = originalTitle; }
 }
 
 async function fetchModels() {
@@ -616,36 +623,18 @@ function saveApiSettings() {
 function applyFontSettings() {
     const size = document.getElementById('font-resizer').value + "px";
     const color = document.getElementById('font-color').value;
-    const url = document.getElementById('font-url').value;
     document.documentElement.style.setProperty('--main-font-size', size);
     document.documentElement.style.setProperty('--main-font-color', color);
     localStorage.setItem('font_size', size);
     localStorage.setItem('font_color', color);
-    localStorage.setItem('font_url', url);
     closeScreen('font-screen');
 }
 
-document.getElementById('wall-file').onchange = function(e) {
-    if (e.target.files[0]) {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            document.documentElement.style.setProperty('--bg-url', `url(${ev.target.result})`);
-            localStorage.setItem('my_wallpaper', ev.target.result);
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    }
-};
-
-function saveWallpaper() { closeScreen('wallpaper-screen'); }
-
-// 监听可编辑小组件内容的保存
 document.querySelectorAll('.editable').forEach(el => {
-    el.addEventListener('blur', () => {
-        localStorage.setItem('widget_' + el.id, el.innerText);
-    });
+    el.addEventListener('blur', () => { localStorage.setItem('widget_' + el.id, el.innerText); });
 });
 
-// 页面加载自动读取缓存
+// --- 初始化加载 ---
 window.onload = function() {
     const s_url = localStorage.getItem('my_api_url');
     const s_key = localStorage.getItem('my_api_key');
@@ -665,34 +654,34 @@ window.onload = function() {
     const s_fc = localStorage.getItem('font_color');
     const s_imgl = localStorage.getItem('img_left');
     const s_imgr = localStorage.getItem('img_right');
-
+       
     if(s_url) { apiSettings.url = s_url; document.getElementById('api-url').value = s_url; }
     if(s_key) { apiSettings.key = s_key; document.getElementById('api-key').value = s_key; }
     if(s_model) { apiSettings.model = s_model; document.getElementById('model-name-display').innerText="模型："+s_model; }
     if(s_memory) { apiSettings.memory = parseInt(s_memory); document.getElementById('api-memory').value = s_memory; }
-    if(s_wall) document.documentElement.style.setProperty('--bg-url', `url(${s_wall})`);
+    if(s_wall) {
+        document.documentElement.style.setProperty('--bg-url', `url(${s_wall})`);
+        const pCur = document.getElementById('preview-current');
+        if(pCur) { pCur.style.backgroundImage = `url(${s_wall})`; pCur.innerText = ""; }
+    }
     if(s_name) { currentUserName = s_name; document.getElementById('me-nick-display').innerText = s_name; }
     if(s_id) { currentMeId = s_id; document.getElementById('me-id-display').innerText = s_id; }
     if(s_status) { currentStatus = s_status; document.getElementById('me-status-display').innerText = s_status; }
     if(s_avatar) { currentUserAvatar = s_avatar; document.getElementById('me-avatar-img').src = s_avatar; }
     if(s_balance) userBalance = s_balance;
-    if(s_f) friends = JSON.parse(s_f);
+    if(s_f) { friends = JSON.parse(s_f); renderFriendList(); }
     if(s_ch) chatHistory = JSON.parse(s_ch);
-    if(s_bios) myBios = JSON.parse(s_bios);
+    if(s_bios) { myBios = JSON.parse(s_bios); renderBioList(); }
     if(s_cur_bio) currentMyBio = s_cur_bio;
     if(s_fs) document.documentElement.style.setProperty('--main-font-size', s_fs);
     if(s_fc) document.documentElement.style.setProperty('--main-font-color', s_fc);
     if(s_imgl) document.getElementById('img-left').src = s_imgl;
     if(s_imgr) document.getElementById('img-right').src = s_imgr;
 
-    // 加载小组件内容
     document.querySelectorAll('.editable').forEach(el => {
         const saved = localStorage.getItem('widget_' + el.id);
         if(saved) el.innerText = saved;
     });
-
-    renderFriendList();
-    renderBioList();
 };
 </script>
 </body>
