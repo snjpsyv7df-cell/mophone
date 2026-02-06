@@ -17,7 +17,8 @@
         }
 
         body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
+            margin: 0;
+            padding: 0; width: 100%; height: 100%;
             overflow: hidden; background-color: #000;
             display: flex; justify-content: center; align-items: center;
             font-family: var(--main-font-family);
@@ -37,8 +38,56 @@
             color: var(--main-font-color);
         }
 
+        /* --- å¼å±å¨ç»æ ·å¼ Start --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        
+        .splash-title {
+            font-size: 48px;
+            margin-bottom: 30px; font-family: sans-serif; z-index: 10;
+        }
+        .title-momo { font-weight: bold; color: #000000; }
+        .title-chat { font-weight: bold; color: #87CEFA; } /* æ·¡èè² */
+
+        /* å¿å½¢èçº¿å¨ç» */
+        .heart-svg { width: 120px; height: 120px; overflow: visible; }
+        .heart-path {
+            fill: none;
+            stroke: #FF69B4; /* ç²è²çº¿æ¡ */
+            stroke-width: 3;
+            stroke-dasharray: 10, 10; /* èçº¿ */
+            stroke-linecap: round;
+            animation: dashMove 1.5s linear infinite;
+        }
+        @keyframes dashMove {
+            to { stroke-dashoffset: -40; }
+        }
+
+        /* ææè£é¥° */
+        .star {
+            position: absolute;
+            color: #FFD700; font-size: 20px;
+            animation: twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* åºé¨æå­ */
+        .splash-footer {
+            position: absolute;
+            bottom: 30px; right: 30px;
+            color: #999; font-size: 12px; font-weight: normal;
+        }
+        /* --- å¼å±å¨ç»æ ·å¼ End --- */
+
         .widget-container {
-            width: 92%; 
+            width: 92%;
             height: 160px;
             margin-top: calc(12% + env(safe-area-inset-top));
             background: rgba(255, 255, 255, 0.4); 
@@ -53,7 +102,7 @@
         }
 
         .widget-item {
-            background: rgba(255, 255, 255, 0.7); 
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 12px;
             display: flex; 
             flex-direction: column;
@@ -74,35 +123,40 @@
         .editable:focus { border-bottom-color: #007aff; }
 
         .app-grid {
-            width: 90%; display: grid; grid-template-columns: repeat(4, 1fr);
+            width: 90%;
+            display: grid; grid-template-columns: repeat(4, 1fr);
             gap: 15px; margin-top: 25px;
         }
         .iscreen-img-box {
-            grid-column: span 2; grid-row: span 2;
+            grid-column: span 2;
+            grid-row: span 2;
             width: 100%; aspect-ratio: 1/1; border-radius: 22%;
             overflow: hidden; background: #fff;
         }
         .iscreen-img-box img { width: 100%; height: 100%; object-fit: cover; }
         
         .app-item { display: flex; flex-direction: column; align-items: center; }
-        .app-icon { width: 60px; height: 60px; border-radius: 16px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+        .app-icon { width: 60px; height: 60px; border-radius: 16px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; }
 
         .screen-full {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: #ededed; z-index: 100; display: none; flex-direction: column; color: #000;
         }
         .sub-header {
-            padding: 50px 15px 15px; display: flex; align-items: center;
+            padding: 50px 15px 15px;
+            display: flex; align-items: center;
             background: #ededed; font-weight: bold; font-size: 17px;
         }
         .back-btn { font-size: 26px; margin-right: 15px; cursor: pointer; line-height: 1; }
 
         .menu-item {
-            background: #fff; margin: 10px 15px; padding: 15px;
+            background: #fff;
+            margin: 10px 15px; padding: 15px;
             border-radius: 12px; display: flex; justify-content: space-between;
             align-items: center; font-size: 16px;
         }
-        .arrow-r::after { content: '›'; color: #ccc; font-size: 20px; }
+        .arrow-r::after { content: 'âº'; color: #ccc; font-size: 20px; }
 
         .setting-box { padding: 15px; flex:1; overflow-y:auto; }
         .input-bubble { width: 100%; border: none; padding: 12px; border-radius: 10px; margin: 10px 0; box-sizing: border-box; background: #fdfdfd; }
@@ -111,7 +165,8 @@
         .contact-avatar { width: 45px; height: 45px; border-radius: 6px; margin-right: 12px; object-fit: cover; }
 
         .wx-navbar {
-            height: 60px; background: #f7f7f7; border-top: 0.5px solid #ddd;
+            height: 60px;
+            background: #f7f7f7; border-top: 0.5px solid #ddd;
             display: flex; justify-content: space-around; align-items: center;
             padding-bottom: env(safe-area-inset-bottom);
         }
@@ -123,79 +178,271 @@
         .chat-row.friend { justify-content: flex-start; }
         .bubble-avatar { width: 40px; height: 40px; border-radius: 4px; }
         .bubble-content { 
-            padding: 8px 12px; border-radius: 6px; max-width: 65%; 
+            padding: 8px 12px;
+            border-radius: 6px; max-width: 65%; 
             font-size: 15px; word-break: break-all; position: relative;
         }
         .self .bubble-content { background: #95ec69; margin-right: 10px; }
         .friend .bubble-content { background: #fff; margin-left: 10px; border: 0.5px solid #ddd; }
 
         .dock {
-            position: absolute; bottom: calc(20px + env(safe-area-inset-bottom)); 
+            position: absolute;
+            bottom: calc(20px + env(safe-area-inset-bottom)); 
             width: 90%; height: 85px;
             background: rgba(255,255,255,0.3); backdrop-filter: blur(20px);
             border-radius: 30px; display: flex; justify-content: space-around; align-items: center;
         }
+
+        /* æ¨¡ææ¡éç¨æ ·å¼ */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 3000;
+        }
+        .modal-box {
+            background: #fff;
+            width: 70%; padding: 20px; border-radius: 12px; text-align: center; color: #000;
+        }
+        
+        /* æ¨¡åéæ©å¼¹çªæ ·å¼ */
+        #model-select-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: 200; display: none;
+        }
+        #model-select-box {
+            position: absolute;
+            width: 80%; max-height: 200px; background: #fff; 
+            border: 1px solid #ccc; border-radius: 8px; overflow-y: auto; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            /* ä½ç½®ç±JSå¨æè®¡ç®ï¼æèç®åå±ä¸­ */
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* æ¨¡åéæ©UIèªå®ä¹æ ·å¼ */
+        .model-ui-container {
+            background: #fdfdfd;
+            width: 100%; border-radius: 10px; padding: 10px; margin: 10px 0; box-sizing: border-box;
+            display: flex; flex-direction: column;
+        }
+        .model-ui-header { font-size: 10px; color: #999; margin-bottom: 5px; text-align: left;
+        }
+        .model-ui-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0;
+            cursor: pointer; }
+        .model-ui-label { font-size: 14px; color: #000;
+        }
+        .model-ui-value { font-size: 12px; color: #666; margin-right: 5px; flex: 1; text-align: right;
+            overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .model-ui-arrow { font-size: 12px; color: #000;
+        }
+        .model-ui-divider { height: 1px; background: #f0f0f0; margin: 5px 0; border: none;
+            width: 100%; }
+        .model-ui-btn { 
+            border: 1px solid #000;
+            border-radius: 4px; padding: 4px 10px; 
+            background: transparent; color: #000; font-size: 14px; margin: 0 auto; display: block; width: fit-content; cursor: pointer;
+        }
+
+        /* --- ä¸çä¹¦æ°å¢æ ·å¼ --- */
+        #wb-list { flex: 1; overflow-y: auto; padding-top: 10px; }
+        .wb-item { background: #fff; margin: 5px 15px 10px; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .wb-title-text { flex: 1; cursor: pointer; }
+        .wb-delete-btn { font-size: 20px; margin-left: 15px; cursor: pointer; opacity: 0.6; }
+        .wb-label { margin: 15px 15px 5px; font-weight: bold; font-size: 15px; }
+        .wb-bubble { background: #fff; margin: 0 15px 15px; padding: 12px; border-radius: 12px; border: none; width: calc(100% - 30px); box-sizing: border-box; font-size: 14px; outline: none; }
+        .wb-large-bubble { height: 200px; resize: none; }
+        .wb-select-bubble { display: flex; justify-content: space-between; align-items: center; background: #fff; cursor: pointer; }
+
+        /* --- Chat Settings Styles --- */
+        .chat-menu-btn { font-size: 24px; cursor: pointer; margin-right: 0; line-height: 1; padding: 0 10px; }
+        
+        .settings-cell { background: #fff; border-radius: 12px; margin: 10px 15px; padding: 15px; font-size: 16px; position: relative; }
+        .s-bubble-row { display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 12px; padding: 15px; margin: 10px 15px; }
+        
+        .friend-set-avatar { display: flex; flex-direction: column; align-items: center; padding: 15px; background: #fff; margin: 10px 15px; border-radius: 12px; cursor: pointer; }
+        .friend-set-avatar img { width: 60px; height: 60px; border-radius: 8px; margin-bottom: 8px; object-fit: cover; }
+        .friend-set-avatar span { font-size: 12px; color: #999; }
+
+        .info-edit-box { background: #fff; margin: 10px 15px; border-radius: 12px; padding: 0 15px; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 0.5px solid #eee; cursor: pointer; }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { font-size: 16px; color: #000; }
+        .info-val { font-size: 14px; color: #888; max-width: 60%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+        .role-box { background: #fff; margin: 10px 15px; border-radius: 12px; padding: 15px; cursor: pointer; }
+        .role-title { font-size: 16px; margin-bottom: 5px; font-weight: bold; }
+        .role-content { font-size: 14px; color: #666; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .wb-bind-row { display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 12px; padding: 15px; margin: 10px 15px; cursor: pointer; }
+        .wb-bind-label { font-size: 16px; }
+        .wb-bind-hint { font-size: 12px; color: #999; margin-top: 4px; }
+        
+        .save-float-btn {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 50px; background: #07c160; color: #fff;
+            border: none; border-radius: 12px; font-size: 16px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .check-circle { width: 20px; height: 20px; border: 1px solid #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; }
+        .check-circle.checked { background: #07c160; border-color: #07c160; color: #fff; }
+        .check-circle.checked::after { content: 'â'; font-size: 14px; }
+        
+        .persona-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .persona-item:last-child { border-bottom: none; }
+        .persona-img { width: 40px; height: 40px; border-radius: 4px; margin-right: 10px; object-fit: cover; }
+        .persona-check { margin-left: auto; color: #07c160; font-weight: bold; display: none; }
+        .persona-item.selected .persona-check { display: block; }
+
+        /* --- Load More Styles --- */
+        .load-more-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .load-more-line {
+            height: 1px;
+            border-top: 1px dashed #ccc;
+            flex: 1;
+            margin: 0 10px;
+            max-width: 30%;
+        }
+        .load-more-text {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* --- Chat Settings Styles --- */
+        .chat-menu-btn { font-size: 24px; cursor: pointer; margin-right: 0; line-height: 1; padding: 0 10px; }
+        
+        .settings-cell { background: #fff; border-radius: 12px; margin: 10px 15px; padding: 15px; font-size: 16px; position: relative; }
+        .s-bubble-row { display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 12px; padding: 15px; margin: 10px 15px; }
+        
+        .friend-set-avatar { display: flex; flex-direction: column; align-items: center; padding: 15px; background: #fff; margin: 10px 15px; border-radius: 12px; cursor: pointer; }
+        .friend-set-avatar img { width: 60px; height: 60px; border-radius: 8px; margin-bottom: 8px; object-fit: cover; }
+        .friend-set-avatar span { font-size: 12px; color: #999; }
+
+        .info-edit-box { background: #fff; margin: 10px 15px; border-radius: 12px; padding: 0 15px; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 0.5px solid #eee; cursor: pointer; }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { font-size: 16px; color: #000; }
+        .info-val { font-size: 14px; color: #888; max-width: 60%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+        .role-box { background: #fff; margin: 10px 15px; border-radius: 12px; padding: 15px; cursor: pointer; }
+        .role-title { font-size: 16px; margin-bottom: 5px; font-weight: bold; }
+        .role-content { font-size: 14px; color: #666; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .wb-bind-row { display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 12px; padding: 15px; margin: 10px 15px; cursor: pointer; }
+        .wb-bind-label { font-size: 16px; }
+        .wb-bind-hint { font-size: 12px; color: #999; margin-top: 4px; }
+        
+        .save-float-btn {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 50px; background: #07c160; color: #fff;
+            border: none; border-radius: 12px; font-size: 16px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .check-circle { width: 20px; height: 20px; border: 1px solid #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; }
+        .check-circle.checked { background: #07c160; border-color: #07c160; color: #fff; }
+        .check-circle.checked::after { content: 'â'; font-size: 14px; }
+        
+        .persona-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .persona-item:last-child { border-bottom: none; }
+        .persona-img { width: 40px; height: 40px; border-radius: 4px; margin-right: 10px; object-fit: cover; }
+        .persona-check { margin-left: auto; color: #07c160; font-weight: bold; display: none; }
+        .persona-item.selected .persona-check { display: block; }
+
     </style>
 </head>
 <body>
 
+<div id="splash-screen">
+    <div class="star" style="top: 20%; left: 15%; animation-delay: 0s;">â</div>
+    <div class="star" style="top: 15%; right: 20%; animation-delay: 0.5s; font-size: 14px;">â</div>
+    <div class="star" style="bottom: 40%; left: 10%; animation-delay: 1.2s; font-size: 24px;">â</div>
+    <div class="star" style="bottom: 35%; right: 15%; animation-delay: 0.8s;">â</div>
+    <div class="star" style="top: 50%; left: 5%; animation-delay: 0.2s; font-size: 12px;">â</div>
+    <div class="star" style="top: 45%; right: 8%; animation-delay: 1.5s; font-size: 16px;">â</div>
+
+    <div class="splash-title">
+        <span class="title-momo">MoMo</span><span class="title-chat">Chat</span>
+    </div>
+
+    <svg class="heart-svg" viewBox="0 0 100 100">
+        <path class="heart-path" d="M50 30 C 20 0, 0 30, 50 90 C 100 30, 80 0, 50 30" />
+    </svg>
+
+    <div class="splash-footer">æ¬¢è¿ä½¿ç¨ééå°ææº</div>
+</div>
+
 <div id="phone-wrapper">
     <div class="widget-container">
-        <div class="widget-item">
-            <div id="widget-date" class="editable" contenteditable="true">--</div>
-            <div id="widget-day" class="editable" contenteditable="true">--</div>
-        </div>
-        <div class="widget-item">
-            <div style="font-size: 10px;">📶 WiFi</div>
-            <div style="color:#007aff; font-weight: bold;">On</div>
-        </div>
-        <div class="widget-item">
-            <div id="widget-time" class="editable" contenteditable="true">--:--</div>
-        </div>
-        <div class="widget-item">
-            <div style="font-size: 14px;">🔋</div>
-            <div id="bat-val">--%</div>
-        </div>
-        <div class="widget-item">
-            <div id="widget-storage" class="editable" contenteditable="true" style="font-size: 9px;">352GB/511GB</div>
-        </div>
-        <div class="widget-item" style="grid-column: span 2;">
-            <div id="widget-model" class="editable" contenteditable="true">iPhone 16 Pro</div>
-            <div id="widget-chip" class="editable" contenteditable="true" style="font-weight:bold; font-size: 10px;"> A18 Pro</div>
-        </div>
-        <div class="widget-item">
-            <div id="widget-version" class="editable" contenteditable="true" style="font-size: 9px;">iOS 26.2.1</div>
-        </div>
+        <div class="widget-item"><div id="widget-date" class="editable" contenteditable="true">--</div><div id="widget-day" class="editable" contenteditable="true">--</div></div>
+        <div class="widget-item"><div style="font-size: 10px;">ð¶ WiFi</div><div style="color:#007aff; font-weight: bold;">On</div></div>
+        <div class="widget-item"><div id="widget-time" class="editable" contenteditable="true">--:--</div></div>
+        <div class="widget-item"><div style="font-size: 14px;">ð</div><div id="bat-val">--%</div></div>
+        <div class="widget-item"><div id="widget-storage" class="editable" contenteditable="true" style="font-size: 9px;">352GB/511GB</div></div>
+        <div class="widget-item" style="grid-column: span 2;"><div id="widget-model" class="editable" contenteditable="true">iPhone 16 Pro</div><div id="widget-chip" class="editable" contenteditable="true" style="font-weight:bold; font-size: 10px;">ï£¿ A18 Pro</div></div>
+        <div class="widget-item"><div id="widget-version" class="editable" contenteditable="true" style="font-size: 9px;">iOS 26.2.1</div></div>
     </div>
 
     <div class="app-grid">
         <div class="iscreen-img-box" onclick="pickImg('img-left')"><img id="img-left" src="https://via.placeholder.com/300?text=Pic+1"></div>
-        <div class="app-item" onclick="openScreen('theme-screen')"><div class="app-icon" style="background:#fff6f9;"><img src="https://files.catbox.moe/acicvj.png" style="width:100%; height:100%; border-radius:16px; object-fit:cover;"></div><div style="font-size:12px; color:#fff">主题</div></div>
-        <div class="app-item" onclick="openWx()">
-            <div class="app-icon" style="background:#fff; overflow:hidden;">
-                <img src="https://files.catbox.moe/p41qzk.png" style="width:100%; height:100%; object-fit:cover;">
-            </div>
-            <div style="font-size:12px; color:#fff">微信</div>
-        </div>
-        <div class="app-item"><div class="app-icon" style="background:#fff; overflow:hidden;"><img src="https://files.catbox.moe/odkva0.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">世界书</div></div>
-        <div class="app-item" onclick="openScreen('settings-screen')"><div class="app-icon" style="background:#fff; overflow:hidden;"><img src="https://files.catbox.moe/87gxcf.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">设置</div></div>
-        <div class="app-item"><div class="app-icon" style="background:#fff;overflow:hidden;"><img src="https://files.catbox.moe/jj9fxf.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">商店</div></div>
-        <div class="app-item"><div class="app-icon" style="background:#000; color:#fff;">𝕏</div><div style="font-size:12px; color:#fff">X</div></div>
+        <div class="app-item" onclick="openScreen('theme-screen')"><div class="app-icon" style="background:#fff6f9;"><img src="https://files.catbox.moe/acicvj.png" style="width:100%; height:100%; border-radius:16px; object-fit:cover;"></div><div style="font-size:12px; color:#fff">ä¸»é¢</div></div>
+        <div class="app-item" onclick="openWx()"><div class="app-icon" style="background:#fff; overflow:hidden;"><img src="https://files.catbox.moe/p41qzk.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">å¾®ä¿¡</div></div>
+        <div class="app-item" onclick="openWorldBook()"><div class="app-icon" style="background:#fff; overflow:hidden;"><img src="https://files.catbox.moe/odkva0.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">ä¸çä¹¦</div></div>
+        <div class="app-item" onclick="openScreen('settings-screen')"><div class="app-icon" style="background:#fff; overflow:hidden;"><img src="https://files.catbox.moe/87gxcf.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">è®¾ç½®</div></div>
+        <div class="app-item"><div class="app-icon" style="background:#fff;overflow:hidden;"><img src="https://files.catbox.moe/jj9fxf.png" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size:12px; color:#fff">ååº</div></div>
+        <div class="app-item"><div class="app-icon" style="background:#E0F7FA; color:#fff;">ð</div><div style="font-size:12px; color:#fff">X</div></div>
         <div class="iscreen-img-box" onclick="pickImg('img-right')"><img id="img-right" src="https://via.placeholder.com/300?text=Pic+2"></div>
     </div>
 
     <div class="dock">
-        <div class="app-icon" style="background:#fff; display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/b6qyki.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
-        <div class="app-icon" style="background:#fff ;display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/e1eq3w.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
-        <div class="app-icon" style="background:#fff ;display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/azg53f.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
-        <div class="app-icon" style="background:#fff; display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="https://files.catbox.moe/2pt67i.png" style="width: 80%; height: 80%; object-fit: contain;"></div>
+        <div class="app-icon" style="background:#fff;"><img src="https://files.catbox.moe/b6qyki.png" style="width:80%;"></div>
+        <div class="app-icon" style="background:#fff;"><img src="https://files.catbox.moe/e1eq3w.png" style="width:80%;"></div>
+        <div class="app-icon" style="background:#fff;"><img src="https://files.catbox.moe/azg53f.png" style="width:80%;"></div>
+        <div class="app-icon" style="background:#fff;"><img src="https://files.catbox.moe/2pt67i.png" style="width:80%;"></div>
+    </div>
+
+    <div id="worldbook-screen" class="screen-full">
+        <div class="sub-header">
+            <span class="back-btn" onclick="closeScreen('worldbook-screen')">â¹</span>
+            <span style="flex:1; text-align:center;">ä¸çä¹¦</span>
+            <span style="font-size:24px; cursor:pointer;" onclick="openAddWorldBook()">+</span>
+        </div>
+        <div id="wb-list"></div>
+    </div>
+
+    <div id="wb-edit-screen" class="screen-full">
+        <div class="sub-header">
+            <span class="back-btn" onclick="closeScreen('wb-edit-screen')">â¹</span>
+            <span id="wb-edit-title" style="flex:1; text-align:center;">æ·»å ä¸çä¹¦</span>
+            <span style="font-size:16px; cursor:pointer; color:#07c160;" onclick="saveWorldBook()">ä¿å­</span>
+        </div>
+        <div class="setting-box">
+            <div class="wb-label">æ é¢</div>
+            <input type="text" id="wb-input-title" class="wb-bubble" placeholder="è¯·è¾å¥æ é¢">
+            <div class="wb-label">åå®¹</div>
+            <textarea id="wb-input-content" class="wb-bubble wb-large-bubble" placeholder="è¯·è¾å¥åå®¹"></textarea>
+            <div class="wb-label">æ³¨å¥ä½ç½®</div>
+            <div class="wb-bubble wb-select-bubble" onclick="toggleWbPos()">
+                <span id="wb-pos-val">å</span>
+                <span style="color:#ccc">âº</span>
+            </div>
+            <div class="wb-label">åç±»</div>
+            <div class="wb-bubble" style="color:#999;">å¾å®</div>
+        </div>
     </div>
 
     <div id="wechat-screen" class="screen-full">
         <div id="wx-page-msg" style="display:flex; flex-direction:column; height:100%;">
             <div class="sub-header">
-                <span class="back-btn" onclick="closeScreen('wechat-screen')">‹</span>
-                <span style="flex:1">微信</span>
+                <span class="back-btn" onclick="closeScreen('wechat-screen')">â¹</span>
+                <span style="flex:1; text-align:center;">å¾®ä¿¡</span>
                 <span style="font-size:24px; cursor:pointer;" onclick="showAddModal('friend')">+</span>
             </div>
             <div id="chat-list" style="flex:1; background:#fff; overflow-y:auto;"></div>
@@ -204,39 +451,40 @@
             <div class="sub-header" style="background:#fff; padding-bottom:30px;">
                 <img id="me-avatar-img" src="https://via.placeholder.com/60" style="width:60px; height:60px; border-radius:8px; margin-right:15px;" onclick="pickImg('me-avatar-img')">
                 <div style="flex:1">
-                    <div id="me-nick-display" style="font-size:20px; font-weight:bold;">未设置昵称</div>
-                    <div style="color:#888; font-size:14px; margin-top:4px;">微信号：<span id="me-id-display">未设置</span></div>
-                    <div id="me-status-display" style="display:inline-block; border:1px solid #ccc; border-radius:10px; padding:2px 8px; font-size:12px; margin-top:5px; color:#555;">+ 状态</div>
+                    <div id="me-nick-display" style="font-size:20px; font-weight:bold;">æ</div>
+                    <div style="color:#888; font-size:14px; margin-top:4px;">å¾®ä¿¡å·ï¼<span id="me-id-display">æªè®¾ç½®</span></div>
+                    <div id="me-status-display" style="display:inline-block; border:1px solid #ccc; border-radius:10px; padding:2px 8px; font-size:12px; margin-top:5px; color:#555;">+ ç¶æ</div>
                 </div>
             </div>
-            <div class="menu-item arrow-r" onclick="showService()">服务</div>
-            <div class="menu-item arrow-r" onclick="openMyBios()">我的人设</div>
-            <div class="menu-item arrow-r" onclick="openMeSettings()">个人信息设置</div>
+            <div class="menu-item arrow-r" onclick="showService()">æå¡</div>
+            <div class="menu-item arrow-r" onclick="openMyBios()">æçäººè®¾</div>
+            <div class="menu-item arrow-r" onclick="openMeSettings()">ä¸ªäººä¿¡æ¯è®¾ç½®</div>
         </div>
         <div class="wx-navbar">
-            <div class="nav-item" onclick="switchWxTab('msg')"><div class="nav-icon">💬</div>消息</div>
-            <div class="nav-item"><div class="nav-icon">🧭</div>发现</div>
-            <div class="nav-item" onclick="switchWxTab('me')"><div class="nav-icon">👤</div>我</div>
+            <div class="nav-item" onclick="switchWxTab('msg')"><div class="nav-icon">ð¬</div>æ¶æ¯</div>
+            <div class="nav-item"><div class="nav-icon">ð§­</div>åç°</div>
+            <div class="nav-item" onclick="switchWxTab('me')"><div class="nav-icon">ð¤</div>æ</div>
         </div>
     </div>
 
     <div id="chat-screen" class="screen-full" style="background:#f3f3f3;">
         <div class="sub-header" style="background:#f3f3f3; border-bottom:0.5px solid #ddd;">
-            <span class="back-btn" onclick="closeScreen('chat-screen')">‹</span>
-            <span id="chat-title" style="flex:1; text-align:center; margin-right:30px;">好友</span>
+            <span class="back-btn" onclick="exitChat()">â¹</span>
+            <span id="chat-title" style="flex:1; text-align:center;">å¥½å</span>
+            <span class="chat-menu-btn" onclick="openChatSettings()">â®</span>
         </div>
         <div id="chat-content" style="flex:1; overflow-y:auto; padding:15px; display:flex; flex-direction:column;"></div>
         <div style="background:#f7f7f7; padding:10px; display:flex; align-items:flex-end; gap:8px; border-top:0.5px solid #ddd;">
-            <div onclick="triggerAiReply()" style="font-size:24px; cursor:pointer; padding-bottom:5px;">⚡</div>
-            <textarea id="msg-input" placeholder="输入消息..." style="flex:1; min-height:36px; max-height:100px; border:none; border-radius:5px; padding:8px; font-size:16px; outline:none; resize:none;"></textarea>
-            <button id="msg-send-btn" onclick="sendMessage()" style="display:none; background:#07c160; color:#fff; border:none; padding:8px 15px; border-radius:5px; font-weight:bold;">发送</button>
+            <div onclick="triggerAiReply()" style="font-size:24px; cursor:pointer; padding-bottom:5px;">â¡</div>
+            <textarea id="msg-input" placeholder="è¾å¥æ¶æ¯..." style="flex:1; min-height:36px; max-height:100px; border:none; border-radius:5px; padding:8px; font-size:16px; outline:none; resize:none;"></textarea>
+            <button id="msg-send-btn" onclick="sendMessage()" style="display:none; background:#07c160; color:#fff; border:none; padding:8px 15px; border-radius:5px; font-weight:bold;">åé</button>
         </div>
     </div>
 
     <div id="my-bios-screen" class="screen-full">
         <div class="sub-header">
-            <span class="back-btn" onclick="closeScreen('my-bios-screen')">‹</span>
-            <span style="flex:1">我的人设</span>
+            <span class="back-btn" onclick="closeScreen('my-bios-screen')">â¹</span>
+            <span style="flex:1; text-align:center;">æçäººè®¾</span>
             <span style="font-size:24px; cursor:pointer;" onclick="showAddModal('me')">+</span>
         </div>
         <div id="bios-list" style="flex:1; background:#fff; overflow-y:auto;"></div>
@@ -244,81 +492,246 @@
 
     <div id="add-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:2000;">
         <div style="background:#fff; width:80%; padding:20px; border-radius:15px; color:#000;">
-            <h3 id="modal-title" style="margin-top:0; text-align:center;">添加</h3>
+            <h3 id="modal-title" style="margin-top:0; text-align:center;">æ·»å </h3>
             <input type="file" id="add-head" accept="image/*" style="margin-bottom:15px; width:100%;">
-            <input type="text" id="add-nick" placeholder="姓名/昵称" class="input-bubble" style="background:#f5f5f5">
-            <input type="text" id="add-mark" placeholder="备注" class="input-bubble" style="background:#f5f5f5">
-            <textarea id="add-bio" placeholder="设定描述" class="input-bubble" style="background:#f5f5f5; height:80px;"></textarea>
+            <input type="text" id="add-nick" placeholder="å§å/æµç§°" class="input-bubble" style="background:#f5f5f5">
+            <input type="text" id="add-mark" placeholder="å¤æ³¨" class="input-bubble" style="background:#f5f5f5">
+            <textarea id="add-bio" placeholder="è®¾å®æè¿°" class="input-bubble" style="background:#f5f5f5; height:80px;"></textarea>
             <div style="display:flex; justify-content: space-between; margin-top:10px;">
-                <button onclick="document.getElementById('add-modal').style.display='none'" style="padding:10px 25px; border:none; border-radius:8px; background:#eee;">取消</button>
-                <button onclick="confirmAddAny()" style="background:#07c160; color:#fff; border:none; padding:10px 25px; border-radius:8px;">保存</button>
+                <button onclick="document.getElementById('add-modal').style.display='none'" style="padding:10px 25px; border:none; border-radius:8px; background:#eee;">åæ¶</button>
+                <button onclick="confirmAddAny()" style="background:#07c160; color:#fff; border:none; padding:10px 25px; border-radius:8px;">ä¿å­</button>
             </div>
         </div>
     </div>
 
     <div id="me-settings-screen" class="screen-full">
-        <div class="sub-header"><span class="back-btn" onclick="closeScreen('me-settings-screen')">‹</span><span>个人信息</span></div>
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('me-settings-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">ä¸ªäººä¿¡æ¯</span></div>
         <div class="setting-box">
-            <input type="text" id="set-me-nick" placeholder="昵称" class="input-bubble">
-            <input type="text" id="set-me-id" placeholder="微信号" class="input-bubble">
-            <input type="text" id="set-me-status" placeholder="状态" class="input-bubble">
-            <button onclick="saveMeSettings()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px; margin-top:20px;">保存</button>
+            <input type="text" id="set-me-nick" placeholder="æµç§°" class="input-bubble">
+            <input type="text" id="set-me-id" placeholder="å¾®ä¿¡å·" class="input-bubble">
+            <input type="text" id="set-me-status" placeholder="ç¶æ" class="input-bubble">
+            <button onclick="saveMeSettings()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px; margin-top:20px;">ä¿å­</button>
         </div>
     </div>
 
     <div id="settings-screen" class="screen-full">
-        <div class="sub-header"><span class="back-btn" onclick="closeScreen('settings-screen')">‹</span><span>设置</span></div>
-        <div class="menu-item arrow-r" onclick="openScreen('api-screen')">API 设置</div>
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('settings-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">è®¾ç½®</span></div>
+        <div class="menu-item arrow-r" onclick="openScreen('api-screen')">API è®¾ç½®</div>
     </div>
 
     <div id="api-screen" class="screen-full">
-        <div class="sub-header"><span class="back-btn" onclick="closeScreen('api-screen')">‹</span><span>API 设置</span></div>
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('api-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">API è®¾ç½®</span></div>
         <div class="setting-box">
-            <input type="text" id="api-url" class="input-bubble" placeholder="API 地址">
+            <input type="text" id="api-url" class="input-bubble" placeholder="API å°å">
             <input type="password" id="api-key" class="input-bubble" placeholder="API Key">
-            <div id="model-name-display" style="font-size:12px; margin:5px;">模型：未选择</div>
-            <button onclick="fetchModels()" style="color:#007aff; border:none; background:none;">获取模型列表</button>
-            <div id="model-list-container" style="display:none; max-height:100px; overflow-y:auto; border:1px solid #eee; margin-top:5px;"></div>
-            <input type="number" id="api-memory" class="input-bubble" value="25" placeholder="记忆条数">
-            <button onclick="saveApiSettings()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px; margin-top:20px;">保存全部设置</button>
+            
+            <div class="model-ui-container">
+                <div class="model-ui-header">æ¨¡åéæ©</div>
+                <div class="model-ui-row" onclick="openModelSelect()">
+                    <span class="model-ui-label">æ¨¡ååç§°</span>
+                    <span id="model-display-val" class="model-ui-value">è¯·åæåæ¨¡åå¹¶éæ©</span>
+                    <span class="model-ui-arrow">â¼</span>
+                </div>
+                <div class="model-ui-divider"></div>
+                <button onclick="startFetchModels()" class="model-ui-btn">â½è·åæ¨¡ååè¡¨</button>
+            </div>
+
+            <input type="number" id="api-memory" class="input-bubble" value="25" placeholder="è®°å¿æ¡æ°">
+            <button onclick="saveApiSettings()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px; margin-top:20px;">ä¿å­å¨é¨è®¾ç½®</button>
+        </div>
+        
+        <div id="model-select-overlay" onclick="closeModelSelect(event)">
+            <div id="model-select-box"></div>
+        </div>
+    </div>
+
+    <div id="loading-modal" class="modal-overlay">
+        <div class="modal-box">
+            <p id="loading-text" style="margin-bottom:20px;">æ­£å¨è·åæ¨¡å...</p>
+            <button id="loading-btn" onclick="closeLoadingModal()" style="padding:8px 20px; border:none; background:#07c160; color:#fff; border-radius:5px; display:none;">ç¡®å®</button>
         </div>
     </div>
 
     <div id="theme-screen" class="screen-full">
-        <div class="sub-header"><span class="back-btn" onclick="closeScreen('theme-screen')">‹</span><span>主题设置</span></div>
-        <div class="menu-item arrow-r" onclick="openScreen('font-screen')">字体设置</div>
-        <div class="menu-item arrow-r" onclick="openScreen('wallpaper-screen')">主屏幕壁纸</div>
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('theme-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">ä¸»é¢è®¾ç½®</span></div>
+        <div class="menu-item arrow-r" onclick="openScreen('font-screen')">å­ä½è®¾ç½®</div>
+        <div class="menu-item arrow-r" onclick="openScreen('wallpaper-screen')">ä¸»å±å¹å£çº¸</div>
     </div>
 
     <div id="font-screen" class="screen-full">
-        <div class="sub-header"><span class="back-btn" onclick="closeScreen('font-screen')">‹</span><span>字体设置</span></div>
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('font-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">å­ä½è®¾ç½®</span></div>
         <div class="setting-box">
-            <input type="text" id="font-url" class="input-bubble" placeholder="字体链接">
+            <input type="text" id="font-url" class="input-bubble" placeholder="å­ä½é¾æ¥">
             <input type="range" id="font-resizer" min="10" max="30" value="14" style="width:100%">
             <input type="color" id="font-color" style="width:50px; height:50px;">
-            <button onclick="applyFontSettings()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px;">应用</button>
+            <button onclick="applyFontSettings()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px;">åºç¨å¹¶ä¿å­</button>
         </div>
     </div>
 
     <div id="wallpaper-screen" class="screen-full">
-        <div class="sub-header"><span class="back-btn" onclick="closeScreen('wallpaper-screen')">‹</span><span>壁纸</span></div>
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('wallpaper-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">å£çº¸</span></div>
         <div class="setting-box">
-            <div class="menu-item arrow-r" onclick="document.getElementById('wall-file').click()">选取相册图片</div>
+            <div class="menu-item arrow-r" onclick="document.getElementById('wall-file').click()">éåç¸åå¾ç</div>
             <input type="file" id="wall-file" hidden accept="image/*">
-            
             <div style="display: flex; justify-content: space-around; gap: 15px; margin: 20px 0;">
                 <div style="text-align: center;">
-                    <div id="preview-current" style="width: 100px; height: 180px; background: #ccc; border-radius: 12px; background-size: cover; background-position: center; border: 2px solid #333; overflow: hidden;"></div>
-                    <p style="font-size: 10px; color: #666; margin-top: 5px;">当前使用</p>
+                    <div id="preview-current" style="width: 100px; height: 180px; background: #ccc; border-radius: 12px; background-size: cover; border: 2px solid #333;"></div>
+                    <p style="font-size: 10px; color: #666;">å½åä½¿ç¨</p>
                 </div>
                 <div style="text-align: center;">
-                    <div id="preview-new" style="width: 100px; height: 180px; background: #eee; border-radius: 12px; background-size: cover; background-position: center; border: 2px dashed #999; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px;">
-                        未选择
-                    </div>
-                    <p style="font-size: 10px; color: #666; margin-top: 5px;">待替换预览</p>
+                    <div id="preview-new" style="width: 100px; height: 180px; background: #eee; border-radius: 12px; background-size: cover; border: 2px dashed #999; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px;">æªéæ©</div>
+                    <p style="font-size: 10px; color: #666;">å¾æ¿æ¢é¢è§</p>
                 </div>
             </div>
-            <button onclick="saveWallpaper()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px;">保存并应用</button>
+            <button onclick="saveWallpaper()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px;">ä¿å­å¹¶åºç¨</button>
+        </div>
+    </div>
+
+    <div id="delete-wb-modal" class="modal-overlay">
+        <div class="modal-box">
+            <p>ç¡®å®è¦å é¤è¿ä¸ªä¸çä¹¦åï¼</p>
+            <div style="display:flex; justify-content:space-between; margin-top:20px;">
+                <button onclick="closeDeleteModal()" style="padding:8px 25px; border:none; border-radius:5px; background:#eee;">åæ¶</button>
+                <button onclick="confirmDeleteWorldBook()" style="padding:8px 25px; border:none; border-radius:5px; background:red; color:#fff;">ç¡®å®</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Settings Screens -->
+    <div id="chat-settings-screen" class="screen-full">
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('chat-settings-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">èå¤©è®¾ç½®</span></div>
+        <div style="flex:1; overflow-y:auto; padding-top:10px;">
+            <div class="s-bubble-row" onclick="openFriendSettings()">
+                <span>å¥½åä¸ç¾¤èè®¾ç½®</span>
+                <span style="color:#ccc">âº</span>
+            </div>
+            <div class="s-bubble-row" onclick="openChatBgSettings()">
+                <span>èå¤©èæ¯</span>
+                <span style="color:#ccc">âº</span>
+            </div>
+            <div style="text-align:center; margin-top:30px;">
+                <button onclick="showDeleteFriendModal()" style="color:red; background:none; border:none; font-size:16px;">å é¤è¯¥å¥½å</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="friend-settings-screen" class="screen-full">
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('friend-settings-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">å¥½åè®¾ç½®</span></div>
+        <div style="flex:1; overflow-y:auto; padding-bottom: 80px;">
+            <div class="friend-set-avatar" onclick="document.getElementById('friend-avatar-picker').click()">
+                <img id="fs-avatar-img" src="https://via.placeholder.com/60">
+                <span>ç¹å»æ´æ¢å¤´å</span>
+            </div>
+            <input type="file" id="friend-avatar-picker" hidden accept="image/*" onchange="updateFriendAvatar(this)">
+            
+            <div class="info-edit-box">
+                <div class="info-row" onclick="openEditModal('nick')">
+                    <span class="info-label">å¥½åæµç§°</span>
+                    <span id="fs-nick" class="info-val">--</span>
+                </div>
+                <div class="info-row" onclick="openEditModal('remark')">
+                    <span class="info-label">å¤æ³¨</span>
+                    <span id="fs-remark" class="info-val">--</span>
+                </div>
+            </div>
+
+            <div class="role-box" onclick="openRoleEditModal()">
+                <div class="role-title">è§è²è®¾å®</div>
+                <div id="fs-role-text" class="role-content">--</div>
+            </div>
+
+            <div class="info-edit-box">
+                <div class="info-row" onclick="openBindWbModal()">
+                    <div style="display:flex; flex-direction:column;">
+                        <span class="info-label">ä¸çä¹¦</span>
+                        <span style="font-size:10px; color:#999;">ç¹å»éæ©â¤</span>
+                    </div>
+                </div>
+                <div class="info-row" onclick="openSelectPersonaModal()">
+                     <div style="display:flex; flex-direction:column;">
+                        <span class="info-label">æçäººè®¾</span>
+                        <span style="font-size:10px; color:#999;">ç¹å»éæ©â¤</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="save-float-btn" onclick="saveFriendSettings()">ä¿å­è®¾ç½®</button>
+    </div>
+
+    <div id="chat-bg-settings-screen" class="screen-full">
+        <div class="sub-header"><span class="back-btn" onclick="closeScreen('chat-bg-settings-screen')">â¹</span><span style="flex:1; text-align:center; margin-right:30px;">èå¤©èæ¯</span></div>
+        <div class="setting-box">
+            <div class="s-bubble-row" onclick="document.getElementById('chat-bg-picker').click()">
+                <span>æ¿æ¢èå¤©èæ¯</span>
+                <span style="color:#ccc">âº</span>
+            </div>
+            <input type="file" id="chat-bg-picker" hidden accept="image/*" onchange="previewChatBg(this)">
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <div id="chat-bg-preview" style="width: 140px; height: 250px; background: #eee; border-radius: 12px; background-size: cover; border: 2px dashed #999; display: inline-flex; align-items: center; justify-content: center; color: #999; font-size: 12px;">é¢è§åºå</div>
+            </div>
+            <button onclick="saveChatBg()" style="width:100%; height:50px; background:#07c160; color:#fff; border:none; border-radius:12px; margin-top:20px;">ä¿å­è®¾ç½®</button>
+        </div>
+    </div>
+
+    <!-- New Modals -->
+    <div id="delete-friend-modal" class="modal-overlay">
+        <div class="modal-box">
+            <p>ç¡®å®è¦å é¤è¯¥å¥½ååï¼</p>
+            <div style="display:flex; justify-content:space-between; margin-top:20px;">
+                <button onclick="document.getElementById('delete-friend-modal').style.display='none'" style="padding:8px 25px; border:none; border-radius:5px; background:#eee;">åæ¶</button>
+                <button onclick="confirmDeleteFriend()" style="padding:8px 25px; border:none; border-radius:5px; background:red; color:#fff;">ç¡®å®</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="save-success-modal" class="modal-overlay">
+        <div class="modal-box">
+            <p id="success-msg">è®¾ç½®å·²ä¿å­</p>
+            <button onclick="document.getElementById('save-success-modal').style.display='none'" style="padding:8px 25px; border:none; border-radius:5px; background:#07c160; color:#fff; margin-top:15px;">ç¡®å®</button>
+        </div>
+    </div>
+
+    <div id="bind-wb-modal" class="modal-overlay">
+        <div class="modal-box" style="max-height: 70vh; overflow-y: auto; text-align: left;">
+            <h3 style="text-align:center; margin-top:0;">ç»å®ä¸çä¹¦</h3>
+            <div id="bind-wb-list"></div>
+            <div style="display:flex; justify-content:space-between; margin-top:20px;">
+                <button onclick="document.getElementById('bind-wb-modal').style.display='none'" style="padding:8px 20px; border:none; border-radius:5px; background:#eee;">åæ¶</button>
+                <button onclick="confirmBindWb()" style="padding:8px 20px; border:none; border-radius:5px; background:#07c160; color:#fff;">ç¡®å®</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="select-persona-modal" class="modal-overlay">
+        <div class="modal-box" style="max-height: 70vh; overflow-y: auto; text-align: left;">
+            <h3 style="text-align:center; margin-top:0;">ç»å½åèå¤©éæ©âæâçäººè®¾</h3>
+            <div id="select-persona-list"></div>
+            <div style="text-align: center; margin-top:20px;">
+                <button onclick="document.getElementById('select-persona-modal').style.display='none'" style="padding:8px 20px; border:none; border-radius:5px; background:#eee; width: 100%;">åæ¶</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="edit-text-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="edit-text-title" style="margin-top:0;">ç¼è¾</h3>
+            <input type="text" id="edit-text-input" class="input-bubble" style="border: 1px solid #eee;">
+            <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                <button onclick="document.getElementById('edit-text-modal').style.display='none'" style="padding:8px 20px; border:none; border-radius:5px; background:#eee;">åæ¶</button>
+                <button onclick="confirmEditText()" style="padding:8px 20px; border:none; border-radius:5px; background:#07c160; color:#fff;">ç¡®å®</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-role-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 style="margin-top:0;">è§è²è®¾å®</h3>
+            <textarea id="edit-role-input" class="input-bubble" style="height: 150px; border: 1px solid #eee; resize: none;"></textarea>
+            <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                <button onclick="document.getElementById('edit-role-modal').style.display='none'" style="padding:8px 20px; border:none; border-radius:5px; background:#eee;">åæ¶</button>
+                <button onclick="confirmEditRole()" style="padding:8px 20px; border:none; border-radius:5px; background:#07c160; color:#fff;">ç¡®å®</button>
+            </div>
         </div>
     </div>
 
@@ -327,17 +740,21 @@
 <input type="file" id="hidden-picker" style="display:none;" accept="image/*">
 
 <script>
-// --- 系统基础逻辑 ---
 function syncTime() {
     const d = new Date();
     document.getElementById('widget-time').innerText = d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
-    document.getElementById('widget-date').innerText = (d.getMonth()+1) + "月" + d.getDate() + "日";
-    const days = ["周日","周一","周二","周三","周四","周五","周六"];
+    document.getElementById('widget-date').innerText = (d.getMonth()+1) + "æ" + d.getDate() + "æ¥";
+    const days = ["å¨æ¥","å¨ä¸","å¨äº","å¨ä¸","å¨å","å¨äº","å¨å­"];
     document.getElementById('widget-day').innerText = days[d.getDay()];
 }
 setInterval(syncTime, 1000); syncTime();
 
-function openScreen(id) { document.getElementById(id).style.display = 'flex'; }
+function openScreen(id) { 
+    if(id === 'me-settings-screen') loadMeSettingsUI();
+    if(id === 'api-screen') loadApiSettingsUI();
+    if(id === 'font-screen') loadFontSettingsUI();
+    document.getElementById(id).style.display = 'flex'; 
+}
 function closeScreen(id) { document.getElementById(id).style.display = 'none'; }
 
 if (navigator.getBattery) {
@@ -348,7 +765,10 @@ if (navigator.getBattery) {
 }
 
 let activeTarget = '';
-function pickImg(id) { activeTarget = id; document.getElementById('hidden-picker').click(); }
+function pickImg(id) {
+    activeTarget = id;
+    document.getElementById('hidden-picker').click();
+}
 document.getElementById('hidden-picker').onchange = function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -356,10 +776,7 @@ document.getElementById('hidden-picker').onchange = function(e) {
         reader.onload = (ev) => {
             const result = ev.target.result;
             document.getElementById(activeTarget).src = result;
-            if(activeTarget === 'me-avatar-img') {
-                currentUserAvatar = result;
-                localStorage.setItem('me_avatar', result);
-            }
+            if(activeTarget === 'me-avatar-img') { currentUserAvatar = result; localStorage.setItem('me_avatar', result); }
             if(activeTarget === 'img-left') localStorage.setItem('img_left', result);
             if(activeTarget === 'img-right') localStorage.setItem('img_right', result);
         }
@@ -367,54 +784,68 @@ document.getElementById('hidden-picker').onchange = function(e) {
     }
 }
 
-// --- 壁纸对比核心逻辑（只保留这一份） ---
 let tempWallpaperData = null;
-
 document.getElementById('wall-file').onchange = function(e) {
     if (e.target.files[0]) {
         const reader = new FileReader();
         reader.onload = (ev) => {
-            tempWallpaperData = ev.target.result; 
+            tempWallpaperData = ev.target.result;
             const previewNew = document.getElementById('preview-new');
             if (previewNew) {
                 previewNew.style.backgroundImage = `url(${tempWallpaperData})`;
-                previewNew.innerText = ""; 
+                previewNew.innerText = "";
             }
         };
         reader.readAsDataURL(e.target.files[0]);
     }
 };
 
-function saveWallpaper() { 
-    if (!tempWallpaperData) {
-        alert("请先选择一张新壁纸");
-        return;
-    }
+function saveWallpaper() {
+    if (!tempWallpaperData) return alert("è¯·åéæ©ä¸å¼ æ°å£çº¸");
     document.documentElement.style.setProperty('--bg-url', `url(${tempWallpaperData})`);
     localStorage.setItem('my_wallpaper', tempWallpaperData);
-    
     const previewCurrent = document.getElementById('preview-current');
     if (previewCurrent) {
         previewCurrent.style.backgroundImage = `url(${tempWallpaperData})`;
         previewCurrent.innerText = "";
     }
-    alert("壁纸保存成功！");
-    closeScreen('wallpaper-screen'); 
+    alert("å£çº¸ä¿å­æåï¼");
+    closeScreen('wallpaper-screen');
 }
 
-// --- 微信及AI逻辑 ---
 let currentUserAvatar = 'https://via.placeholder.com/60';
-let currentUserName = "我";
+let currentUserName = "æ";
 let currentMeId = "wxid_888";
-let currentStatus = "开心";
+let currentStatus = "å¼å¿";
 let userBalance = null;
-let currentMyBio = "你是一个普通用户。"; 
-
-let friends = {}; 
+let currentMyBio = "ä½ æ¯ä¸ä¸ªæ®éç¨æ·ã";
+let friends = {};
 let chatHistory = {};
-let myBios = []; 
+let myBios = [];
+let worldBooks = [];
+let currentWbIndex = -1;
+
 let apiSettings = { url: '', key: '', model: '', memory: 25 };
-let isAiThinking = false; 
+let tempApiModels = [];
+let tempSelectedModel = '';
+let isAiThinking = false;
+
+// èå¤©ç¶æç®¡çï¼{ friendId: { scrollTop: 0, loadedCount: 30, isLoading: false } }
+let chatStates = {};
+let chatScrollHandler = null;
+
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
 
 function openWx() { openScreen('wechat-screen'); switchWxTab('msg'); }
 function switchWxTab(tab) {
@@ -422,13 +853,12 @@ function switchWxTab(tab) {
     document.getElementById('wx-page-me').style.display = (tab === 'me' ? 'flex' : 'none');
 }
 
-function openMeSettings() {
+function openMeSettings() { loadMeSettingsUI(); openScreen('me-settings-screen'); }
+function loadMeSettingsUI() {
     document.getElementById('set-me-nick').value = currentUserName;
     document.getElementById('set-me-id').value = currentMeId;
     document.getElementById('set-me-status').value = currentStatus;
-    openScreen('me-settings-screen');
 }
-
 function saveMeSettings() {
     currentUserName = document.getElementById('set-me-nick').value;
     currentMeId = document.getElementById('set-me-id').value;
@@ -439,226 +869,407 @@ function saveMeSettings() {
     localStorage.setItem('me_name', currentUserName);
     localStorage.setItem('me_id', currentMeId);
     localStorage.setItem('me_status', currentStatus);
+    alert("ä¸ªäººä¿¡æ¯å·²ä¿å­");
     closeScreen('me-settings-screen');
 }
 
-function showService() {
-    if (userBalance === null) {
-        let val = prompt("请输入初始余额：", "8888.00");
-        if (val !== null) { userBalance = val; localStorage.setItem('me_balance', val); }
-    }
-    alert("微信支付余额：¥" + (userBalance || "0.00"));
+function showService() { if (userBalance === null) userBalance = 0; alert("å½åä½é¢: " + userBalance); }
+
+function openMyBios() { renderBioList(); openScreen('my-bios-screen'); }
+function renderBioList() {
+    const list = document.getElementById('bios-list');
+    list.innerHTML = "";
+    myBios.forEach((bio, index) => {
+        const item = document.createElement('div');
+        item.className = "menu-item";
+        item.innerHTML = `<span style="${bio === currentMyBio ? 'color:#07c160;font-weight:bold;' : ''}">${bio.substring(0,15)}...</span>`;
+        item.onclick = () => { currentMyBio = bio; localStorage.setItem('cur_my_bio', bio); renderBioList(); };
+        list.appendChild(item);
+    });
 }
 
-function openMyBios() { openScreen('my-bios-screen'); }
-
-let modalMode = 'friend'; 
-function showAddModal(mode) {
-    modalMode = mode;
+function showAddModal(type) {
     document.getElementById('add-modal').style.display = 'flex';
-    document.getElementById('modal-title').innerText = mode === 'friend' ? '添加好友' : '添加我的人设';
-    document.getElementById('add-mark').style.display = mode === 'friend' ? 'block' : 'none';
+    document.getElementById('modal-title').innerText = type === 'friend' ? 'æ·»å å¥½å' : 'æ·»å äººè®¾';
 }
-
 function confirmAddAny() {
+    const type = document.getElementById('modal-title').innerText;
     const nick = document.getElementById('add-nick').value;
-    const mark = document.getElementById('add-mark').value;
     const bio = document.getElementById('add-bio').value;
-    const headFile = document.getElementById('add-head').files[0];
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-        const avatar = e.target.result;
-        if(modalMode === 'friend') {
-            const displayName = mark || nick;
-            friends[displayName] = { avatar, bio: bio || "普通好友" };
-            chatHistory[displayName] = chatHistory[displayName] || [];
-            saveWxData(); renderFriendList();
-        } else {
-            const newBio = { nick, avatar, bio };
-            myBios.push(newBio);
-            saveWxData(); renderBioList();
-        }
-        document.getElementById('add-modal').style.display = 'none';
-    };
-    if(headFile) reader.readAsDataURL(headFile);
-    else reader.onload({target:{result:'https://via.placeholder.com/45'}});
-}
-
-function saveWxData() {
-    localStorage.setItem('wx_friends', JSON.stringify(friends));
-    localStorage.setItem('wx_chat_history', JSON.stringify(chatHistory));
-    localStorage.setItem('wx_my_bios', JSON.stringify(myBios));
+    if(!nick) return alert("è¯·è¾å¥å¿å¡«é¡¹");
+    if(type === 'æ·»å å¥½å') {
+        const id = "wx_" + Date.now();
+        friends[id] = { name: nick, head: 'https://via.placeholder.com/45', bio: bio };
+        localStorage.setItem('friends', JSON.stringify(friends));
+        renderFriendList();
+    } else {
+        myBios.push(bio);
+        localStorage.setItem('my_bios', JSON.stringify(myBios));
+        renderBioList();
+    }
+    document.getElementById('add-modal').style.display = 'none';
 }
 
 function renderFriendList() {
     const list = document.getElementById('chat-list');
     list.innerHTML = "";
-    for(let name in friends) {
+    for(let id in friends) {
+        const f = friends[id];
         const item = document.createElement('div');
-        item.className = 'contact-item';
-        item.onclick = () => openChat(name);
-        item.innerHTML = `<img src="${friends[name].avatar}" class="contact-avatar"><span>${name}</span>`;
+        item.className = "contact-item";
+        item.innerHTML = `<img src="${f.head}" class="contact-avatar"><div><div style="font-weight:bold;">${f.name}</div><div style="font-size:12px;color:#999;">${f.bio.substring(0,12)}...</div></div>`;
+        item.onclick = () => openChat(id);
         list.appendChild(item);
     }
 }
 
-function renderBioList() {
-    const list = document.getElementById('bios-list');
-    list.innerHTML = "";
-    myBios.forEach((item) => {
-        const div = document.createElement('div');
-        div.className = 'contact-item';
-        div.onclick = () => { 
-            currentMyBio = item.bio; 
-            alert("已切换为你的人设：" + item.nick); 
-            localStorage.setItem('current_my_bio', item.bio);
-            closeScreen('my-bios-screen');
-        };
-        div.innerHTML = `<img src="${item.avatar}" class="contact-avatar"><span>${item.nick}</span>`;
-        list.appendChild(div);
-    });
-}
+function openChat(id) {
+    currentChatFriendId = id;
+    document.getElementById('chat-title').innerText = friends[id].name;
+    
+    // åå§åæè¯»åç¶æ
+    if (!chatStates[id]) {
+        chatStates[id] = { scrollTop: -1, loadedCount: 30, isLoading: false };
+    }
+    
+    // æ¯æ¬¡è¿å¥éç½® isLoadingï¼é²æ­¢å¼å¸¸ç¶æ
+    chatStates[id].isLoading = false;
 
-let currentChatFriend = '';
-function openChat(name) {
-    currentChatFriend = name;
-    document.getElementById('chat-title').innerText = name;
-    document.getElementById('chat-content').innerHTML = "";
-    (chatHistory[name] || []).forEach(m => renderMessage(m.text, m.type));
+    renderChatHistory();
     openScreen('chat-screen');
+
+    const container = document.getElementById('chat-content');
+    
+    // æ¢å¤ä½ç½®
+    setTimeout(() => {
+        if (chatStates[id].scrollTop >= 0) {
+            container.scrollTop = chatStates[id].scrollTop;
+        } else {
+            container.scrollTop = container.scrollHeight;
+        }
+    }, 0);
+
+    // ç»å®æ»å¨çå¬
+    if (chatScrollHandler) container.removeEventListener('scroll', chatScrollHandler);
+    chatScrollHandler = throttle(handleChatScroll, 200);
+    container.addEventListener('scroll', chatScrollHandler);
 }
 
-function renderMessage(text, type) {
-    const chatBox = document.getElementById('chat-content');
-    const row = document.createElement('div');
-    row.className = `chat-row ${type === 'self' ? 'self' : 'friend'}`;
-    const avatarImg = type === 'self' ? currentUserAvatar : friends[currentChatFriend].avatar;
-    const avatarHtml = `<img src="${avatarImg}" class="bubble-avatar">`;
-    const bubbleHtml = `<div class="bubble-content">${text}</div>`;
-    row.innerHTML = type === 'self' ? (bubbleHtml + avatarHtml) : (avatarHtml + bubbleHtml);
-    chatBox.appendChild(row);
-    chatBox.scrollTop = chatBox.scrollHeight;
+function exitChat() {
+    const container = document.getElementById('chat-content');
+    if (currentChatFriendId) {
+        if (!chatStates[currentChatFriendId]) chatStates[currentChatFriendId] = {};
+        chatStates[currentChatFriendId].scrollTop = container.scrollTop;
+        localStorage.setItem('chat_states', JSON.stringify(chatStates));
+    }
+    if (chatScrollHandler) {
+        container.removeEventListener('scroll', chatScrollHandler);
+        chatScrollHandler = null;
+    }
+    closeScreen('chat-screen');
 }
 
-document.getElementById('msg-input').oninput = function() {
-    document.getElementById('msg-send-btn').style.display = this.value.trim().length > 0 ? 'block' : 'none';
-};
+let currentChatFriendId = null;
 
-async function sendMessage() {
+function renderChatHistory() {
+    const container = document.getElementById('chat-content');
+    container.innerHTML = "";
+    
+    const fullHistory = chatHistory[currentChatFriendId] || [];
+    const state = chatStates[currentChatFriendId] || { loadedCount: 30 };
+    const count = state.loadedCount || 30;
+    
+    // åé¡µåç
+    const startIndex = Math.max(0, fullHistory.length - count);
+    const msgsToRender = fullHistory.slice(startIndex);
+    const hasMore = startIndex > 0;
+
+    // æå¥å è½½æç¤º
+    if (hasMore) {
+        const loader = document.createElement('div');
+        loader.className = 'load-more-container';
+        loader.innerHTML = `<div class="load-more-line"></div><div class="load-more-text">${state.isLoading ? 'æ­£å¨å è½½...' : 'ä¸æ»å è½½æ´å¤è®°å½'}</div><div class="load-more-line"></div>`;
+        container.appendChild(loader);
+    }
+
+    msgsToRender.forEach(msg => {
+        const row = document.createElement('div');
+        row.className = "chat-row " + msg.role;
+        const avatar = msg.role === 'self' ? currentUserAvatar : friends[currentChatFriendId].head;
+        row.innerHTML = msg.role === 'self' ? 
+            `<div class="bubble-content">${msg.text}</div><img src="${avatar}" class="bubble-avatar">` :
+            `<img src="${avatar}" class="bubble-avatar"><div class="bubble-content">${msg.text}</div>`;
+        container.appendChild(row);
+    });
+    // æ³¨æï¼ç§»é¤èªå¨æ»å¨å°åºé¨ï¼ç±è°ç¨èæ§å¶
+}
+
+function handleChatScroll() {
+    const container = document.getElementById('chat-content');
+    const state = chatStates[currentChatFriendId];
+    if (!state) return;
+
+    if (container.scrollTop < 50 && !state.isLoading) {
+        const fullLen = (chatHistory[currentChatFriendId] || []).length;
+        if (state.loadedCount < fullLen) {
+            state.isLoading = true;
+            
+            const textEl = container.querySelector('.load-more-text');
+            if(textEl) textEl.innerText = "æ­£å¨å è½½...";
+
+            // æ¨¡æç½ç»å»¶è¿ä½éª
+            setTimeout(() => {
+                const oldSH = container.scrollHeight;
+                const oldST = container.scrollTop;
+                
+                state.loadedCount += 30;
+                renderChatHistory();
+                
+                const newSH = container.scrollHeight;
+                // ä¿æè§è§ä½ç½®ä¸å
+                container.scrollTop = newSH - oldSH + oldST;
+                
+                state.isLoading = false;
+            }, 500);
+        }
+    }
+}
+
+function sendMessage() {
     const input = document.getElementById('msg-input');
-    const content = input.value.trim();
-    if(!content) return;
-    renderMessage(content, 'self');
-    if(!chatHistory[currentChatFriend]) chatHistory[currentChatFriend] = [];
-    chatHistory[currentChatFriend].push({text: content, type: 'self'});
-    saveWxData();
+    const text = input.value.trim();
+    if(!text) return;
+    if(!chatHistory[currentChatFriendId]) chatHistory[currentChatFriendId] = [];
+    chatHistory[currentChatFriendId].push({ role: 'self', text: text });
+    localStorage.setItem('chat_history', JSON.stringify(chatHistory));
     input.value = "";
-    document.getElementById('msg-send-btn').style.display = 'none';
+    
+    renderChatHistory();
+    // åéæ¶æ¯å¼ºå¶æ»å°åºé¨
+    const container = document.getElementById('chat-content');
+    container.scrollTop = container.scrollHeight;
 }
 
 async function triggerAiReply() {
-    if(!apiSettings.key) return alert("请先在设置中配置 API");
-    if(isAiThinking) return alert("AI 正在回复中...");
+    if(isAiThinking) return;
+    if(!apiSettings.url || !apiSettings.key) return alert("è¯·åå¨è®¾ç½®ä¸­éç½®API");
     isAiThinking = true;
-    const originalTitle = currentChatFriend;
-    const titleDom = document.getElementById('chat-title');
-    titleDom.innerText = "正在输入中...";
-    const friendInfo = friends[currentChatFriend];
-    const systemPrompt = `你现在模拟微信聊天。你的名字/人设是：${friendInfo.bio}。对方名字：${currentUserName}，人设：${currentMyBio}。规则：1.仅对话，严禁动作描述和旁白。2.请尽量多说几句话（3-5句），每句话之间用换行符分隔。`;
+    const history = chatHistory[currentChatFriendId] || [];
+    const messages = history.slice(-apiSettings.memory).map(m => ({
+        role: m.role === 'self' ? 'user' : 'assistant',
+        content: m.text
+    }));
+    
+    // ä¸çä¹¦é»è¾ï¼è¯»åæææ³¨å¥ä½ç½®ä¸ºâåâçåå®¹ï¼ä½ä¸ºç³»ç»æç¤ºè¯æç½®é¡¶åå®¹
+    let worldBookContext = "";
+    worldBooks.forEach(wb => {
+        worldBookContext += `[${wb.title}]: ${wb.content}\n`;
+    });
+
+    messages.unshift({ role: 'system', content: `ä½ æ­£å¨æ¨¡æç¤¾äº¤è½¯ä»¶å¯¹è¯ãæçäººè®¾æ¯ï¼${currentMyBio}ãå½åå¯¹è¯å¥½åçäººè®¾æ¯ï¼${friends[currentChatFriendId].bio}ãç¸å³èæ¯è®¾å®å¦ä¸ï¼\n${worldBookContext}` });
+
     try {
-        const context = chatHistory[currentChatFriend].slice(-apiSettings.memory).map(m => ({
-            role: m.type === 'self' ? 'user' : 'assistant',
-            content: m.text
-        }));
-        const response = await fetch(`${apiSettings.url}/chat/completions`, {
+        const resp = await fetch(apiSettings.url + "/chat/completions", {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${apiSettings.key}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ model: apiSettings.model, messages: [{role: "system", content: systemPrompt}, ...context] })
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiSettings.key },
+            body: JSON.stringify({ model: apiSettings.model, messages: messages })
         });
-        const data = await response.json();
-        const fullText = data.choices[0].message.content;
-        const messages = fullText.split(/[\n]+/).filter(s => s.trim().length > 0);
-        for(let i=0; i < messages.length; i++) {
-            const msg = messages[i].trim();
-            await new Promise(res => setTimeout(res, Math.min(Math.max(msg.length * 100, 1000), 2500)));
-            renderMessage(msg, 'friend');
-            chatHistory[currentChatFriend].push({text: msg, type: 'friend'});
-            saveWxData();
-        }
-    } catch (e) { alert("AI 唤醒失败"); } finally { isAiThinking = false; titleDom.innerText = originalTitle; }
+        const data = await resp.json();
+        const reply = data.choices[0].message.content;
+        chatHistory[currentChatFriendId].push({ role: 'friend', text: reply });
+        localStorage.setItem('chat_history', JSON.stringify(chatHistory));
+        renderChatHistory();
+        // æ¶å°æ¶æ¯å¼ºå¶æ»å°åºé¨
+        const container = document.getElementById('chat-content');
+        container.scrollTop = container.scrollHeight;
+    } catch(e) { alert("AIåå¤å¤±è´¥: " + e); }
+    finally { isAiThinking = false; }
 }
 
-async function fetchModels() {
-    const url = document.getElementById('api-url').value;
-    const key = document.getElementById('api-key').value;
-    const listContainer = document.getElementById('model-list-container');
-    if(!url || !key) return alert("未填 API 信息");
-    try {
-        const res = await fetch(`${url}/models`, { headers: { 'Authorization': `Bearer ${key}` } });
-        const data = await res.json();
-        listContainer.innerHTML = "";
-        data.data.forEach(m => {
-            const item = document.createElement('div');
-            item.style = "padding:8px; font-size:12px; cursor:pointer; color:#000;";
-            item.innerText = m.id;
-            item.onclick = () => { apiSettings.model = m.id; document.getElementById('model-name-display').innerText="模型："+m.id; listContainer.style.display='none'; };
-            listContainer.appendChild(item);
-        });
-        listContainer.style.display = 'block';
-    } catch (e) { alert("获取失败"); }
+function loadApiSettingsUI() {
+    document.getElementById('api-url').value = apiSettings.url;
+    document.getElementById('api-key').value = apiSettings.key;
+    document.getElementById('api-memory').value = apiSettings.memory;
+    document.getElementById('model-display-val').innerText = apiSettings.model || "è¯·éæ©æ¨¡å";
+    tempSelectedModel = apiSettings.model;
 }
-
 function saveApiSettings() {
     apiSettings.url = document.getElementById('api-url').value;
     apiSettings.key = document.getElementById('api-key').value;
-    apiSettings.memory = parseInt(document.getElementById('api-memory').value) || 25;
-    localStorage.setItem('my_api_url', apiSettings.url);
-    localStorage.setItem('my_api_key', apiSettings.key);
-    localStorage.setItem('my_api_model', apiSettings.model);
-    localStorage.setItem('my_api_memory', apiSettings.memory);
-    alert("已保存"); closeScreen('api-screen');
+    apiSettings.memory = parseInt(document.getElementById('api-memory').value);
+    apiSettings.model = tempSelectedModel;
+    localStorage.setItem('api_url', apiSettings.url);
+    localStorage.setItem('api_key', apiSettings.key);
+    localStorage.setItem('api_model', apiSettings.model);
+    localStorage.setItem('api_memory', apiSettings.memory);
+    alert("APIè®¾ç½®å·²ä¿å­");
 }
 
+async function startFetchModels() {
+    const url = document.getElementById('api-url').value;
+    const key = document.getElementById('api-key').value;
+    if(!url || !key) return alert("è¯·åè¾å¥APIå°ååKey");
+    document.getElementById('loading-modal').style.display = 'flex';
+    document.getElementById('loading-text').innerText = "æ­£å¨è·åæ¨¡å...";
+    document.getElementById('loading-btn').style.display = 'none';
+    try {
+        const resp = await fetch(url + "/models", { headers: { 'Authorization': 'Bearer ' + key } });
+        const data = await resp.json();
+        tempApiModels = data.data.map(m => m.id);
+        renderModelSelect();
+        document.getElementById('loading-text').innerText = "è·åæåï¼ç¹å»ä¸æ¹æå¼åè¡¨éæ©";
+        document.getElementById('loading-btn').style.display = 'block';
+    } catch(e) {
+        document.getElementById('loading-text').innerText = "è·åå¤±è´¥: " + e;
+        document.getElementById('loading-btn').style.display = 'block';
+    }
+}
+function renderModelSelect() {
+    const box = document.getElementById('model-select-box');
+    box.innerHTML = "";
+    tempApiModels.forEach(m => {
+        const div = document.createElement('div');
+        div.style.padding = "10px"; div.style.borderBottom = "1px solid #eee"; div.style.color = "#000";
+        div.innerText = m;
+        div.onclick = () => { tempSelectedModel = m; document.getElementById('model-display-val').innerText = m; closeModelSelect(); };
+        box.appendChild(div);
+    });
+}
+function openModelSelect() { if(tempApiModels.length > 0) document.getElementById('model-select-overlay').style.display = 'block'; else alert("è¯·åæåæ¨¡ååè¡¨"); }
+function closeModelSelect(e) { if(!e || e.target.id === 'model-select-overlay') document.getElementById('model-select-overlay').style.display = 'none'; }
+function closeLoadingModal() { document.getElementById('loading-modal').style.display = 'none'; }
+
+function loadFontSettingsUI() {
+    document.getElementById('font-resizer').value = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--main-font-size')) || 14;
+}
 function applyFontSettings() {
     const size = document.getElementById('font-resizer').value + "px";
     const color = document.getElementById('font-color').value;
+    const url = document.getElementById('font-url').value;
     document.documentElement.style.setProperty('--main-font-size', size);
     document.documentElement.style.setProperty('--main-font-color', color);
-    localStorage.setItem('font_size', size);
-    localStorage.setItem('font_color', color);
-    closeScreen('font-screen');
+    if(url) {
+        const newFont = new FontFace('CustomFont', `url(${url})`);
+        newFont.load().then(f => { document.fonts.add(f); document.documentElement.style.setProperty('--main-font-family', 'CustomFont'); });
+    }
+    localStorage.setItem('main_fs', size);
+    localStorage.setItem('main_fc', color);
+    alert("è®¾ç½®å·²åºç¨å¹¶ä¿å­");
 }
 
-document.querySelectorAll('.editable').forEach(el => {
-    el.addEventListener('blur', () => { localStorage.setItem('widget_' + el.id, el.innerText); });
-});
+/* --- ä¸çä¹¦ä¸å¡é»è¾ --- */
+function openWorldBook() {
+    renderWorldBookList();
+    openScreen('worldbook-screen');
+}
 
-// --- 初始化加载 ---
+function renderWorldBookList() {
+    const list = document.getElementById('wb-list');
+    list.innerHTML = "";
+    worldBooks.forEach((wb, index) => {
+        const item = document.createElement('div');
+        item.className = "wb-item";
+        item.innerHTML = `
+            <span class="wb-title-text" onclick="editWorldBook(${index})">${wb.title}</span>
+            <span class="wb-delete-btn" onclick="showDeleteWbConfirm(${index})">ðï¸</span>
+        `;
+        list.appendChild(item);
+    });
+}
+
+function openAddWorldBook() {
+    currentWbIndex = -1;
+    document.getElementById('wb-edit-title').innerText = "æ·»å ä¸çä¹¦";
+    document.getElementById('wb-input-title').value = "";
+    document.getElementById('wb-input-content').value = "";
+    document.getElementById('wb-pos-val').innerText = "å";
+    openScreen('wb-edit-screen');
+}
+
+function editWorldBook(index) {
+    currentWbIndex = index;
+    const wb = worldBooks[index];
+    document.getElementById('wb-edit-title').innerText = "ç¼è¾ä¸çä¹¦";
+    document.getElementById('wb-input-title').value = wb.title;
+    document.getElementById('wb-input-content').value = wb.content;
+    document.getElementById('wb-pos-val').innerText = wb.pos || "å";
+    openScreen('wb-edit-screen');
+}
+
+function saveWorldBook() {
+    const title = document.getElementById('wb-input-title').value.trim();
+    const content = document.getElementById('wb-input-content').value.trim();
+    const pos = document.getElementById('wb-pos-val').innerText;
+    if(!title) return alert("è¯·è¾å¥æ é¢");
+    
+    const wbData = { title, content, pos };
+    if(currentWbIndex === -1) {
+        worldBooks.push(wbData);
+    } else {
+        worldBooks[currentWbIndex] = wbData;
+    }
+    
+    localStorage.setItem('world_books', JSON.stringify(worldBooks));
+    renderWorldBookList();
+    closeScreen('wb-edit-screen');
+}
+
+function toggleWbPos() {
+    const el = document.getElementById('wb-pos-val');
+    const cur = el.innerText;
+    if(cur === "å") el.innerText = "ä¸­";
+    else if(cur === "ä¸­") el.innerText = "å";
+    else el.innerText = "å";
+}
+
+let deleteIndex = -1;
+function showDeleteWbConfirm(index) {
+    deleteIndex = index;
+    document.getElementById('delete-wb-modal').style.display = 'flex';
+}
+function closeDeleteModal() {
+    document.getElementById('delete-wb-modal').style.display = 'none';
+    deleteIndex = -1;
+}
+function confirmDeleteWorldBook() {
+    if(deleteIndex > -1) {
+        worldBooks.splice(deleteIndex, 1);
+        localStorage.setItem('world_books', JSON.stringify(worldBooks));
+        renderWorldBookList();
+        closeDeleteModal();
+        alert("å·²æåå é¤");
+    }
+}
+
+// å¯å¨å è½½é»è¾
 window.onload = function() {
-    const s_url = localStorage.getItem('my_api_url');
-    const s_key = localStorage.getItem('my_api_key');
-    const s_model = localStorage.getItem('my_api_model');
-    const s_memory = localStorage.getItem('my_api_memory');
     const s_wall = localStorage.getItem('my_wallpaper');
     const s_name = localStorage.getItem('me_name');
     const s_id = localStorage.getItem('me_id');
     const s_status = localStorage.getItem('me_status');
     const s_avatar = localStorage.getItem('me_avatar');
-    const s_balance = localStorage.getItem('me_balance');
-    const s_f = localStorage.getItem('wx_friends');
-    const s_ch = localStorage.getItem('wx_chat_history');
-    const s_bios = localStorage.getItem('wx_my_bios');
-    const s_cur_bio = localStorage.getItem('current_my_bio');
-    const s_fs = localStorage.getItem('font_size');
-    const s_fc = localStorage.getItem('font_color');
+    const s_balance = localStorage.getItem('user_balance');
+    const s_f = localStorage.getItem('friends');
+    const s_ch = localStorage.getItem('chat_history');
+    const s_bios = localStorage.getItem('my_bios');
+    const s_cur_bio = localStorage.getItem('cur_my_bio');
+    const s_fs = localStorage.getItem('main_fs');
+    const s_fc = localStorage.getItem('main_fc');
+    const s_url = localStorage.getItem('api_url');
+    const s_key = localStorage.getItem('api_key');
+    const s_model = localStorage.getItem('api_model');
+    const s_memory = localStorage.getItem('api_memory');
+    const s_wb = localStorage.getItem('world_books');
     const s_imgl = localStorage.getItem('img_left');
     const s_imgr = localStorage.getItem('img_right');
-       
-    if(s_url) { apiSettings.url = s_url; document.getElementById('api-url').value = s_url; }
-    if(s_key) { apiSettings.key = s_key; document.getElementById('api-key').value = s_key; }
-    if(s_model) { apiSettings.model = s_model; document.getElementById('model-name-display').innerText="模型："+s_model; }
-    if(s_memory) { apiSettings.memory = parseInt(s_memory); document.getElementById('api-memory').value = s_memory; }
+    const s_cstates = localStorage.getItem('chat_states');
+
+    if(s_cstates) chatStates = JSON.parse(s_cstates);
+
+    if(s_url) apiSettings.url = s_url;
+    if(s_key) apiSettings.key = s_key;
+    if(s_model) apiSettings.model = s_model;
+    if(s_memory) apiSettings.memory = parseInt(s_memory);
     if(s_wall) {
         document.documentElement.style.setProperty('--bg-url', `url(${s_wall})`);
         const pCur = document.getElementById('preview-current');
@@ -675,14 +1286,354 @@ window.onload = function() {
     if(s_cur_bio) currentMyBio = s_cur_bio;
     if(s_fs) document.documentElement.style.setProperty('--main-font-size', s_fs);
     if(s_fc) document.documentElement.style.setProperty('--main-font-color', s_fc);
+    if(s_wb) worldBooks = JSON.parse(s_wb);
     if(s_imgl) document.getElementById('img-left').src = s_imgl;
     if(s_imgr) document.getElementById('img-right').src = s_imgr;
 
     document.querySelectorAll('.editable').forEach(el => {
         const saved = localStorage.getItem('widget_' + el.id);
         if(saved) el.innerText = saved;
+        el.onblur = () => localStorage.setItem('widget_' + el.id, el.innerText);
     });
+
+    setTimeout(function() {
+        var splash = document.getElementById('splash-screen');
+        if(splash) splash.style.display = 'none';
+    }, 2000);
 };
+
+document.getElementById('msg-input').oninput = function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+    document.getElementById('msg-send-btn').style.display = this.value.trim() ? 'block' : 'none';
+};
+
+/* --- Chat Settings Logic --- */
+
+// Helper to get current friend object safely
+function getCurFriend() {
+    if(!currentChatFriendId || !friends[currentChatFriendId]) return null;
+    return friends[currentChatFriendId];
+}
+
+function openChatSettings() {
+    openScreen('chat-settings-screen');
+}
+
+/* Friend Settings */
+let tempFriendAvatar = "";
+let tempFriendNick = "";
+let tempFriendRemark = "";
+let tempFriendRole = "";
+let tempBoundWbs = []; // Array of indices or IDs
+let tempUserPersona = ""; // Selected bio string
+
+function openFriendSettings() {
+    const f = getCurFriend();
+    if(!f) return;
+    
+    // Init temp vars with current values
+    tempFriendAvatar = f.head;
+    tempFriendNick = f.name;
+    tempFriendRemark = f.remark || "";
+    tempFriendRole = f.bio || "";
+    tempBoundWbs = f.boundWbs || []; // Store indices of worldBooks
+    tempUserPersona = f.userPersona || (myBios.length > 0 ? myBios[0] : "é»è®¤ç¨æ·");
+
+    // Update UI
+    document.getElementById('fs-avatar-img').src = tempFriendAvatar;
+    document.getElementById('fs-nick').innerText = tempFriendNick;
+    document.getElementById('fs-remark').innerText = tempFriendRemark || "æ ";
+    document.getElementById('fs-role-text').innerText = tempFriendRole || "æ ";
+    
+    openScreen('friend-settings-screen');
+}
+
+function updateFriendAvatar(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            tempFriendAvatar = e.target.result;
+            document.getElementById('fs-avatar-img').src = tempFriendAvatar;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+let editTargetType = ""; // 'nick' or 'remark'
+function openEditModal(type) {
+    editTargetType = type;
+    const title = type === 'nick' ? "ç¼è¾æµç§°" : "ç¼è¾å¤æ³¨";
+    const val = type === 'nick' ? tempFriendNick : tempFriendRemark;
+    document.getElementById('edit-text-title').innerText = title;
+    document.getElementById('edit-text-input').value = val;
+    document.getElementById('edit-text-modal').style.display = 'flex';
+}
+
+function confirmEditText() {
+    const val = document.getElementById('edit-text-input').value.trim();
+    if(editTargetType === 'nick') {
+        if(!val) return alert("æµç§°ä¸è½ä¸ºç©º");
+        tempFriendNick = val;
+        document.getElementById('fs-nick').innerText = val;
+    } else {
+        tempFriendRemark = val;
+        document.getElementById('fs-remark').innerText = val || "æ ";
+    }
+    document.getElementById('edit-text-modal').style.display = 'none';
+}
+
+function openRoleEditModal() {
+    document.getElementById('edit-role-input').value = tempFriendRole;
+    document.getElementById('edit-role-modal').style.display = 'flex';
+}
+
+function confirmEditRole() {
+    tempFriendRole = document.getElementById('edit-role-input').value.trim();
+    document.getElementById('fs-role-text').innerText = tempFriendRole || "æ ";
+    document.getElementById('edit-role-modal').style.display = 'none';
+}
+
+/* WorldBook Binding */
+let pendingBoundWbs = []; // Working copy for modal
+function openBindWbModal() {
+    pendingBoundWbs = [...tempBoundWbs];
+    const list = document.getElementById('bind-wb-list');
+    list.innerHTML = "";
+    if(worldBooks.length === 0) {
+        list.innerHTML = "<div style='padding:20px; text-align:center; color:#999;'>ææ ä¸çä¹¦</div>";
+    } else {
+        worldBooks.forEach((wb, index) => {
+            const isChecked = pendingBoundWbs.includes(index);
+            const item = document.createElement('div');
+            item.className = "wb-bind-row";
+            item.onclick = () => {
+                // Toggle selection
+                if(pendingBoundWbs.includes(index)) {
+                    pendingBoundWbs = pendingBoundWbs.filter(i => i !== index);
+                } else {
+                    pendingBoundWbs.push(index);
+                }
+                openBindWbModal(); // Re-render
+            };
+            item.innerHTML = `
+                <div class="check-circle ${isChecked ? 'checked' : ''}"></div>
+                <div>
+                    <div class="wb-bind-label">${wb.title}</div>
+                </div>
+            `;
+            list.appendChild(item);
+        });
+    }
+    document.getElementById('bind-wb-modal').style.display = 'flex';
+}
+
+function confirmBindWb() {
+    tempBoundWbs = [...pendingBoundWbs];
+    document.getElementById('bind-wb-modal').style.display = 'none';
+}
+
+/* User Persona Selection */
+function openSelectPersonaModal() {
+    const list = document.getElementById('select-persona-list');
+    list.innerHTML = "";
+    if(myBios.length === 0) {
+        list.innerHTML = "<div style='padding:20px; text-align:center; color:#999;'>ææ é¢è®¾äººè®¾</div>";
+    } else {
+        myBios.forEach((bio, index) => {
+            const isSelected = (bio === tempUserPersona);
+            const item = document.createElement('div');
+            item.className = "persona-item " + (isSelected ? "selected" : "");
+            item.onclick = () => selectPersona(bio);
+            // Default avatar for persona list since we don't store separate avatars for bios in this simple version
+            // Using current user avatar for display
+            item.innerHTML = `
+                <img src="${currentUserAvatar}" class="persona-img">
+                <span style="font-size:14px; color:#333; flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">${bio}</span>
+                <span class="persona-check">â</span>
+            `;
+            list.appendChild(item);
+        });
+    }
+    document.getElementById('select-persona-modal').style.display = 'flex';
+}
+
+function selectPersona(bio) {
+    tempUserPersona = bio;
+    document.getElementById('select-persona-modal').style.display = 'none';
+}
+
+function saveFriendSettings() {
+    const f = getCurFriend();
+    if(!f) return;
+    
+    // Save all temps to friend object
+    f.head = tempFriendAvatar;
+    f.name = tempFriendNick;
+    f.remark = tempFriendRemark;
+    f.bio = tempFriendRole;
+    f.boundWbs = tempBoundWbs;
+    f.userPersona = tempUserPersona;
+    
+    friends[currentChatFriendId] = f;
+    localStorage.setItem('friends', JSON.stringify(friends));
+    
+    // Refresh friend list in main screen and chat title
+    renderFriendList();
+    document.getElementById('chat-title').innerText = f.name; // Update chat title immediately
+    
+    // Close screen and show success
+    closeScreen('friend-settings-screen');
+    document.getElementById('save-success-modal').style.display = 'flex';
+}
+
+/* Chat Background Settings */
+let tempChatBg = null;
+
+function openChatBgSettings() {
+    // Check if this friend has a specific bg, otherwise default or global?
+    // Requirement implies per-chat background or global? 
+    // "Click any item... enter corresponding secondary interface" -> "Chat Background"
+    // "Content structure: A white bubble... function is 'Replace Chat Background'..."
+    // "Save Settings: Save and apply new background... return to 'Chat Settings'"
+    // This seems to be setting the background for THIS specific chat.
+    
+    const f = getCurFriend();
+    tempChatBg = f ? (f.chatBg || null) : null;
+    
+    const preview = document.getElementById('chat-bg-preview');
+    if(tempChatBg) {
+        preview.style.backgroundImage = `url(${tempChatBg})`;
+        preview.innerText = "";
+    } else {
+        preview.style.backgroundImage = "none";
+        preview.innerText = "é¢è§åºå";
+    }
+    
+    openScreen('chat-bg-settings-screen');
+}
+
+function previewChatBg(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            tempChatBg = e.target.result;
+            const preview = document.getElementById('chat-bg-preview');
+            preview.style.backgroundImage = `url(${tempChatBg})`;
+            preview.innerText = "";
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function saveChatBg() {
+    const f = getCurFriend();
+    if(f) {
+        f.chatBg = tempChatBg;
+        friends[currentChatFriendId] = f;
+        localStorage.setItem('friends', JSON.stringify(friends));
+        applyChatBg(); // Apply immediately
+        alert("ä¿å­æå");
+        closeScreen('chat-bg-settings-screen');
+    }
+}
+
+function applyChatBg() {
+    const f = getCurFriend();
+    const chatScreen = document.getElementById('chat-screen');
+    if(f && f.chatBg) {
+        chatScreen.style.backgroundImage = `url(${f.chatBg})`;
+        chatScreen.style.backgroundSize = "cover";
+        chatScreen.style.backgroundPosition = "center";
+    } else {
+        chatScreen.style.background = "#f3f3f3";
+        chatScreen.style.backgroundImage = "none";
+    }
+}
+
+// Override openChat to apply background
+const originalOpenChat = openChat;
+openChat = function(id) {
+    originalOpenChat(id);
+    applyChatBg(); // Apply bg when opening chat
+};
+
+/* Delete Friend */
+function showDeleteFriendModal() {
+    document.getElementById('delete-friend-modal').style.display = 'flex';
+}
+
+function confirmDeleteFriend() {
+    if(currentChatFriendId && friends[currentChatFriendId]) {
+        delete friends[currentChatFriendId];
+        delete chatHistory[currentChatFriendId];
+        localStorage.setItem('friends', JSON.stringify(friends));
+        localStorage.setItem('chat_history', JSON.stringify(chatHistory));
+        
+        renderFriendList();
+        
+        document.getElementById('delete-friend-modal').style.display = 'none';
+        closeScreen('chat-settings-screen');
+        closeScreen('chat-screen');
+        alert("å é¤æå");
+    }
+}
+
+/* AI Reply Update */
+async function triggerAiReply() {
+    if(isAiThinking) return;
+    if(!apiSettings.url || !apiSettings.key) return alert("è¯·åå¨è®¾ç½®ä¸­éç½®API");
+    
+    isAiThinking = true;
+    const history = chatHistory[currentChatFriendId] || [];
+    const messages = history.slice(-apiSettings.memory).map(m => ({
+        role: m.role === 'self' ? 'user' : 'assistant',
+        content: m.text
+    }));
+    
+    const f = friends[currentChatFriendId];
+    if(!f) return; // å®å¨æ£æ¥
+
+    // Determine User Persona
+    // 1. Friend specific persona
+    // 2. Global default (first one)
+    // 3. Hardcoded default
+    let userPersonaToUse = f.userPersona;
+    if(!userPersonaToUse && myBios.length > 0) userPersonaToUse = myBios[0];
+    if(!userPersonaToUse) userPersonaToUse = currentMyBio; // Fallback to global var
+
+    // Determine WorldBooks
+    // Only use bound worldbooks if any are bound. If none bound, use global active ones?
+    // Requirement says: "Check... Char will read content; Uncheck... will not read."
+    // So we only read bound ones.
+    let worldBookContext = "";
+    if(f.boundWbs && f.boundWbs.length > 0) {
+        f.boundWbs.forEach(index => {
+            if(worldBooks[index]) {
+                worldBookContext += `[${worldBooks[index].title}]: ${worldBooks[index].content}\n`;
+            }
+        });
+    }
+
+    messages.unshift({ role: 'system', content: `ä½ æ­£å¨æ¨¡æç¤¾äº¤è½¯ä»¶å¯¹è¯ãæçäººè®¾æ¯ï¼${userPersonaToUse}ãå½åå¯¹è¯å¥½åçäººè®¾æ¯ï¼${f.bio}ãç¸å³èæ¯è®¾å®å¦ä¸ï¼\n${worldBookContext}` });
+
+    try {
+        const resp = await fetch(apiSettings.url + "/chat/completions", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiSettings.key },
+            body: JSON.stringify({ model: apiSettings.model, messages: messages })
+        });
+        const data = await resp.json();
+        const reply = data.choices[0].message.content;
+        chatHistory[currentChatFriendId].push({ role: 'friend', text: reply });
+        localStorage.setItem('chat_history', JSON.stringify(chatHistory));
+        renderChatHistory();
+        // æ¶å°æ¶æ¯å¼ºå¶æ»å°åºé¨
+        const container = document.getElementById('chat-content');
+        container.scrollTop = container.scrollHeight;
+    } catch(e) { alert("AIåå¤å¤±è´¥: " + e); }
+    finally { isAiThinking = false; }
+}
+
 </script>
 </body>
-</html>
