@@ -1,4 +1,40 @@
-snjpsyv7df-cell            box-shadow: none;
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="https://s1.ax1x.com/2023/10/24/piZf959.jpg">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Mobile OS Simulator</title>
+    <style>
+        :root {
+            --bg-url: url('https://via.placeholder.com/1080x2340/333/666?text=Wallpaper');
+            --main-font-family: -apple-system, sans-serif;
+            --main-font-size: 14px;
+            --main-font-color: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background-color: #000;
+            display: flex; justify-content: center; align-items: center;
+            font-family: var(--main-font-family);
+        }
+
+        #phone-wrapper {
+            position: relative;
+            width: 100vw; 
+            height: 100vh;
+            background: var(--bg-url) center/cover no-repeat;
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            border-radius: 0; 
+            box-shadow: none;
             color: var(--main-font-color);
         }
 
@@ -481,6 +517,7 @@ snjpsyv7df-cell            box-shadow: none;
     <div id="settings-screen" class="screen-full">
         <div class="sub-header"><span class="back-btn" onclick="closeScreen('settings-screen')">‹</span><span style="flex:1; text-align:center; margin-right:30px;">设置</span></div>
         <div class="menu-item arrow-r" onclick="openScreen('api-screen')">API 设置</div>
+        <div class="menu-item arrow-r" onclick="generateShareLink()">生成分享链接 (Data URI)</div>
     </div>
 
     <div id="api-screen" class="screen-full">
@@ -513,6 +550,18 @@ snjpsyv7df-cell            box-shadow: none;
         <div class="modal-box">
             <p id="loading-text" style="margin-bottom:20px;">正在获取模型...</p>
             <button id="loading-btn" onclick="closeLoadingModal()" style="padding:8px 20px; border:none; background:#07c160; color:#fff; border-radius:5px; display:none;">确定</button>
+        </div>
+    </div>
+
+    <div id="share-modal" class="modal-overlay">
+        <div class="modal-box" style="width: 85%;">
+            <p style="margin-bottom:10px; font-weight:bold;">分享链接已生成</p>
+            <p style="font-size:12px; color:#666; margin-bottom:10px;">复制下方链接，粘贴到浏览器地址栏即可恢复当前状态。</p>
+            <textarea id="share-link-text" style="width:100%; height:100px; font-size:10px; border:1px solid #ddd; border-radius:5px; padding:5px; resize:none;" readonly></textarea>
+            <div style="display:flex; justify-content:space-between; margin-top:15px;">
+                <button onclick="document.getElementById('share-modal').style.display='none'" style="padding:8px 15px; border:none; border-radius:5px; background:#eee;">关闭</button>
+                <button onclick="copyShareLink()" style="padding:8px 15px; border:none; border-radius:5px; background:#07c160; color:#fff;">复制链接</button>
+            </div>
         </div>
     </div>
 
@@ -1207,6 +1256,41 @@ function confirmDeleteWorldBook() {
 
 // 启动加载逻辑
 window.onload = function() {
+    // 优先检查是否有预加载状态 (来自分享链接)
+    if (window.PRELOADED_STATE) {
+        restoreFromPreloadedState(window.PRELOADED_STATE);
+    }
+    
+    // 然后加载本地存储 (如果预加载状态未覆盖某些项，或者作为常规加载流程)
+    // 注意：如果是从分享链接打开，PRELOADED_STATE 应该已经设置了变量。
+    // 为了避免本地存储覆盖分享带来的状态，我们需要判断。
+    // 策略：如果存在 PRELOADED_STATE，我们优先使用它，并将其保存到本地 (可选，或者仅本次会话有效)
+    // 这里简化逻辑：常规加载。如果 PRELOADED_STATE 存在，它已经在上方代码中初始化了内存变量。
+    // 下面的逻辑会从 localStorage 读取。如果 localStorage 有值，会覆盖内存变量。
+    // 所以我们需要反转逻辑：如果 PRELOADED_STATE 存在，跳过 localStorage 读取，或者只读取未定义的。
+    
+    if (!window.PRELOADED_STATE) {
+        loadFromLocalStorage();
+    } else {
+        // 如果是分享链接打开，应用预设状态到界面
+        applyStateToUI();
+        // 并在稍后保存到本地，以便下次直接打开能延续
+        saveAllToLocalStorage(); 
+    }
+
+    document.querySelectorAll('.editable').forEach(el => {
+        const saved = localStorage.getItem('widget_' + el.id);
+        if(saved && !window.PRELOADED_STATE) el.innerText = saved; // 仅在非分享模式下读取组件本地状态
+        el.onblur = () => localStorage.setItem('widget_' + el.id, el.innerText);
+    });
+
+    setTimeout(function() {
+        var splash = document.getElementById('splash-screen');
+        if(splash) splash.style.display = 'none';
+    }, 2000);
+};
+
+function loadFromLocalStorage() {
     const s_wall = localStorage.getItem('my_wallpaper');
     const s_name = localStorage.getItem('me_name');
     const s_id = localStorage.getItem('me_id');
@@ -1229,7 +1313,6 @@ window.onload = function() {
     const s_cstates = localStorage.getItem('chat_states');
 
     if(s_cstates) chatStates = JSON.parse(s_cstates);
-
     if(s_url) apiSettings.url = s_url;
     if(s_key) apiSettings.key = s_key;
     if(s_model) apiSettings.model = s_model;
@@ -1239,32 +1322,162 @@ window.onload = function() {
         const pCur = document.getElementById('preview-current');
         if(pCur) { pCur.style.backgroundImage = `url(${s_wall})`; pCur.innerText = ""; }
     }
-    if(s_name) { currentUserName = s_name; document.getElementById('me-nick-display').innerText = s_name; }
-    if(s_id) { currentMeId = s_id; document.getElementById('me-id-display').innerText = s_id; }
-    if(s_status) { currentStatus = s_status; document.getElementById('me-status-display').innerText = s_status; }
-    if(s_avatar) { currentUserAvatar = s_avatar; document.getElementById('me-avatar-img').src = s_avatar; }
+    if(s_name) currentUserName = s_name;
+    if(s_id) currentMeId = s_id;
+    if(s_status) currentStatus = s_status;
+    if(s_avatar) currentUserAvatar = s_avatar;
     if(s_balance) userBalance = s_balance;
-    if(s_f) { friends = JSON.parse(s_f); renderFriendList(); }
+    if(s_f) friends = JSON.parse(s_f);
     if(s_ch) chatHistory = JSON.parse(s_ch);
-    if(s_bios) { myBios = JSON.parse(s_bios); renderBioList(); }
+    if(s_bios) myBios = JSON.parse(s_bios);
     if(s_cur_bio) currentMyBio = s_cur_bio;
     if(s_fs) document.documentElement.style.setProperty('--main-font-size', s_fs);
     if(s_fc) document.documentElement.style.setProperty('--main-font-color', s_fc);
     if(s_wb) worldBooks = JSON.parse(s_wb);
+    // 图片设置
     if(s_imgl) document.getElementById('img-left').src = s_imgl;
     if(s_imgr) document.getElementById('img-right').src = s_imgr;
 
-    document.querySelectorAll('.editable').forEach(el => {
-        const saved = localStorage.getItem('widget_' + el.id);
-        if(saved) el.innerText = saved;
-        el.onblur = () => localStorage.setItem('widget_' + el.id, el.innerText);
-    });
+    applyStateToUI();
+}
 
-    setTimeout(function() {
-        var splash = document.getElementById('splash-screen');
-        if(splash) splash.style.display = 'none';
-    }, 2000);
-};
+function restoreFromPreloadedState(state) {
+    if(state.apiSettings) apiSettings = state.apiSettings;
+    if(state.chatStates) chatStates = state.chatStates;
+    if(state.friends) friends = state.friends;
+    if(state.chatHistory) chatHistory = state.chatHistory;
+    if(state.myBios) myBios = state.myBios;
+    if(state.worldBooks) worldBooks = state.worldBooks;
+    
+    if(state.currentUserName) currentUserName = state.currentUserName;
+    if(state.currentMeId) currentMeId = state.currentMeId;
+    if(state.currentStatus) currentStatus = state.currentStatus;
+    if(state.currentUserAvatar) currentUserAvatar = state.currentUserAvatar;
+    if(state.currentMyBio) currentMyBio = state.currentMyBio;
+    if(state.userBalance) userBalance = state.userBalance;
+
+    if(state.styles) {
+        if(state.styles.bgUrl) document.documentElement.style.setProperty('--bg-url', state.styles.bgUrl);
+        if(state.styles.fontSize) document.documentElement.style.setProperty('--main-font-size', state.styles.fontSize);
+        if(state.styles.fontColor) document.documentElement.style.setProperty('--main-font-color', state.styles.fontColor);
+    }
+    
+    if(state.images) {
+         if(state.images.imgLeft) document.getElementById('img-left').src = state.images.imgLeft;
+         if(state.images.imgRight) document.getElementById('img-right').src = state.images.imgRight;
+    }
+}
+
+function applyStateToUI() {
+    document.getElementById('me-nick-display').innerText = currentUserName;
+    document.getElementById('me-id-display').innerText = currentMeId;
+    document.getElementById('me-status-display').innerText = currentStatus;
+    document.getElementById('me-avatar-img').src = currentUserAvatar;
+    renderFriendList();
+    renderBioList();
+}
+
+function saveAllToLocalStorage() {
+    localStorage.setItem('me_name', currentUserName);
+    localStorage.setItem('me_id', currentMeId);
+    localStorage.setItem('me_status', currentStatus);
+    localStorage.setItem('me_avatar', currentUserAvatar);
+    if(userBalance) localStorage.setItem('user_balance', userBalance);
+    localStorage.setItem('friends', JSON.stringify(friends));
+    localStorage.setItem('chat_history', JSON.stringify(chatHistory));
+    localStorage.setItem('my_bios', JSON.stringify(myBios));
+    localStorage.setItem('cur_my_bio', currentMyBio);
+    localStorage.setItem('world_books', JSON.stringify(worldBooks));
+    localStorage.setItem('api_url', apiSettings.url);
+    localStorage.setItem('api_key', apiSettings.key);
+    localStorage.setItem('api_model', apiSettings.model);
+    localStorage.setItem('api_memory', apiSettings.memory);
+    localStorage.setItem('chat_states', JSON.stringify(chatStates));
+    
+    // Styles need careful saving as they are usually raw values in storage
+    localStorage.setItem('main_fs', getComputedStyle(document.documentElement).getPropertyValue('--main-font-size').trim());
+    localStorage.setItem('main_fc', getComputedStyle(document.documentElement).getPropertyValue('--main-font-color').trim());
+    
+    // Note: Background image URL in storage is usually just the data URI, but CSS var has url(...)
+    // Extraction might be needed if we want to be perfect, but keeping as is for now.
+}
+
+/* --- 分享功能实现 --- */
+function generateShareLink() {
+    // 1. 收集当前状态
+    const state = {
+        apiSettings,
+        chatStates,
+        friends,
+        chatHistory,
+        myBios,
+        worldBooks,
+        currentUserName,
+        currentMeId,
+        currentStatus,
+        currentUserAvatar,
+        currentMyBio,
+        userBalance,
+        styles: {
+            bgUrl: getComputedStyle(document.documentElement).getPropertyValue('--bg-url'),
+            fontSize: getComputedStyle(document.documentElement).getPropertyValue('--main-font-size'),
+            fontColor: getComputedStyle(document.documentElement).getPropertyValue('--main-font-color')
+        },
+        images: {
+            imgLeft: document.getElementById('img-left').getAttribute('src'),
+            imgRight: document.getElementById('img-right').getAttribute('src')
+        }
+    };
+
+    // 2. 获取当前 HTML 源码
+    // 我们使用 document.documentElement.outerHTML 获取当前 DOM 状态
+    // 但为了确保“干净”的启动，我们需要移除可能存在的旧 PRELOADED_STATE 脚本
+    let htmlContent = document.documentElement.outerHTML;
+    
+    // 移除已有的 preloaded-state 脚本块（如果有）
+    const regex = /<script id="preloaded-state">[\s\S]*?<\/script>/gi;
+    htmlContent = htmlContent.replace(regex, '');
+
+    // 3. 注入当前状态
+    // 我们将状态数据注入到 head 结束标签之前，或者 body 结束标签之前
+    // 确保数据经过 JSON 序列化
+    const stateScript = `<script id="preloaded-state">window.PRELOADED_STATE = ${JSON.stringify(state)};<\/script>`;
+    
+    // 插入到 </body> 之前
+    const insertPos = htmlContent.lastIndexOf('</body>');
+    if (insertPos !== -1) {
+        htmlContent = htmlContent.substring(0, insertPos) + stateScript + htmlContent.substring(insertPos);
+    } else {
+        htmlContent += stateScript;
+    }
+
+    // 4. 生成 Data URI
+    // 关键：使用 encodeURIComponent 处理所有非ASCII字符，避免乱码
+    const dataUri = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent);
+
+    // 5. 显示链接
+    document.getElementById('share-link-text').value = dataUri;
+    document.getElementById('share-modal').style.display = 'flex';
+}
+
+function copyShareLink() {
+    const copyText = document.getElementById("share-link-text");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+    
+    try {
+        if(navigator.clipboard) {
+             navigator.clipboard.writeText(copyText.value).then(() => {
+                 alert("链接已复制！注意：链接可能较长，请使用支持长文本的粘贴板或保存为书签。");
+             });
+        } else {
+            document.execCommand("copy");
+            alert("链接已复制！");
+        }
+    } catch(e) {
+        alert("复制失败，请手动全选复制");
+    }
+}
 
 document.getElementById('msg-input').oninput = function() {
     this.style.height = 'auto';
@@ -1602,4 +1815,3 @@ async function triggerAiReply() {
 </script>
 </body>
 </html>
-
